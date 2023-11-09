@@ -12,7 +12,9 @@ export default function createToDoTask(toDoProperties, validator) {
 
     // Setter methods.
     const setDescription = (newDescription) => {
-        description = newDescription;
+        if (validator.validateDescription(newDescription)) {
+            description = newDescription;
+        };
     };
     const setTitle = (newTitle) => {
         if (validator.validateTitle(newTitle)) {
@@ -20,10 +22,14 @@ export default function createToDoTask(toDoProperties, validator) {
         };
     };
     const setDueDate = (newDueDate) => {
-        dueDate = newDueDate;
+        if (validator.validateDate(newDueDate)) {
+            dueDate = newDueDate;
+        }; 
     };
     const setPriority = (newPriority) => {
-        priority = newPriority;
+        if (validator.validatePriority(newPriority)) {
+            priority = newPriority;
+        };
     };
     
     return {getTitle, 
