@@ -1,4 +1,6 @@
-export default function createToDoTask(toDoProperties) {
+'use strict';
+
+export default function createToDoTask(toDoProperties, validator) {
     // Deconstruct parameters.
     let {title, description, dueDate, priority} = toDoProperties;
 
@@ -13,7 +15,9 @@ export default function createToDoTask(toDoProperties) {
         description = newDescription;
     };
     const setTitle = (newTitle) => {
-        title = newTitle;
+        if (validator.validateTitle(newTitle)) {
+            title = newTitle;
+        };
     };
     const setDueDate = (newDueDate) => {
         dueDate = newDueDate;
