@@ -23,7 +23,7 @@
         </div>
         <div class="add-section">
             <h2>Add New Section</h2>
-            <button type="button"><img src="./assets/card-plus.svg" alt="Add Section Button"></button>
+            <button type="button"><img src="./assets/card-plus.svg" alt="Add Section Button" id="add-section-button"></button>
         </div>
     </div>
 
@@ -41,6 +41,14 @@
             <input type="date" name="task-due-date" id="task-due-date">
             <button type="button" id="confirm-task-dialog">Confirm</button>
             <button type="button" id="cancel-task-dialog">Cancel</button>
+        </form>
+    </dialog>
+    <dialog id="create-section-dialog">
+        <form action="">
+            <label for="section-title">Title:</label>
+            <input type="text" name="section-title" id="section-title">
+            <button type="button" id="confirm-section-dialog">Confirm</button>
+            <button type="button" id="cancel-section-dialog">Cancel</button>
         </form>
     </dialog>
 </body>

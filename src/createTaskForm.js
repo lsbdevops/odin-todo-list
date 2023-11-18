@@ -1,6 +1,12 @@
 'use strict';
-import {default as validator} from './toDoValidator';
-import {default as createTask} from './taskInterface';
+import {default as validator} from './toDoValidator.js';
+import {default as createTask} from './taskInterface.js';
+
+export default function addTaskFormEvents(sectionAddTaskButton) {
+    openAddTaskForm(sectionAddTaskButton);
+    closeAddTaskForm();
+    submitAddTaskForm();
+}
 
 function openAddTaskForm(sectionAddTaskButton) {
     // Add event listener to open add task form.
@@ -39,6 +45,7 @@ function submitAddTaskForm() {
         if (validateAddTaskForm(taskProperties, validator())) {
             // Use interface to create task.
             createTask(taskProperties);
+            resetAddTaskForm();
             addTaskForm.close();
         }
     });
@@ -58,4 +65,9 @@ function validateAddTaskForm(taskProperties, validator) {
     return true;
 }
 
-export {openAddTaskForm, closeAddTaskForm, submitAddTaskForm};
+function resetAddTaskForm() {
+    document.querySelector('#task-title').value = '';
+    document.querySelector('#task-due-date').value = '';
+}
+
+export {openAddTaskForm};

@@ -1,7 +1,7 @@
 'use strict';
-import {default as createToDoTask} from './createToDoTask';
-import {default as renderTask} from './renderTask';
-import {default as toDoValidator} from './toDoValidator';
+import {default as createToDoTask} from './createToDoTask.js';
+import {default as renderTask} from './renderTask.js';
+import {default as toDoValidator} from './toDoValidator.js';
 
 export default function taskInterface(taskProperties) {
     const task = createToDoTask(taskProperties, toDoValidator());

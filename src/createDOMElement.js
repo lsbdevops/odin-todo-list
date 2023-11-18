@@ -1,7 +1,7 @@
 'use strict';
 
 export default function createElement(elementProperties) {
-    const {tag, cls, text} = elementProperties;
+    const {tag, cls, text, attributes} = elementProperties;
 
     const element = document.createElement(tag);
 
@@ -11,6 +11,12 @@ export default function createElement(elementProperties) {
 
     if (text) {
         element.textContent = text;
+    }
+
+    if (attributes) {
+        for (const [key, value] of Object.entries(attributes)) {
+            element.setAttribute(key, value);
+        }
     }
 
     return element;
