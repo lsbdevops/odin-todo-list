@@ -13,5 +13,6 @@ export default function sectionInterface(sectionProperties, project) {
     project.addSectionToProject(section);
 
     // Render the section on the page.
-    document.querySelector('.content').insertBefore(renderSection(section), document.querySelector('.add-section'));
+    const sectionPageElement = renderSection(section);
+    document.querySelector('.content').insertBefore(sectionPageElement, document.querySelector('.add-section'));
 }

@@ -2,8 +2,7 @@
 import {default as validator} from './toDoValidator.js';
 import {default as createTask} from './taskInterface.js';
 
-export default function addTaskFormEvents(sectionAddTaskButton, activeProject) {
-    openAddTaskForm(sectionAddTaskButton);
+export default function addTaskFormEvents(activeProject) {
     closeAddTaskForm();
     submitAddTaskForm(activeProject);
 }
