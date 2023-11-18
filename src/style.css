@@ -56,6 +56,31 @@ header {
     background-color: #dbeafe;
 }
 
+.add-section {
+    border: 2px dashed black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-section > h2 {
+    margin: 0px;
+}
+
+.add-section > button {
+    width: 25%;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: var(--light-bg-colour);
+}
+
+.add-section > button > img:hover {
+    cursor: pointer;
+    filter: invert(16%) sepia(83%) saturate(2018%) hue-rotate(216deg) brightness(91%) contrast(94%);
+}
+
 .section-title {
     display: flex;
     align-items: center;
@@ -69,11 +94,6 @@ header {
     margin: 0px;
     border: none;
     background-color: #dbeafe;
-}
-
-.section-title > button > img {
-    height: 35px;
-    width: 35px;
 }
 
 .section-title > button > img:hover {
