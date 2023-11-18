@@ -27,20 +27,34 @@
     </footer>
     <dialog id="create-task-dialog">
         <form action="">
+            <h2>Add New Task</h2>
             <label for="task-title">Title:</label>
             <input type="text" name="task-title" id="task-title">
             <label for="task-due-date">Due Date:</label>
             <input type="date" name="task-due-date" id="task-due-date">
-            <button type="button" id="confirm-task-dialog">Confirm</button>
-            <button type="button" id="cancel-task-dialog">Cancel</button>
+            <label for="task-description">Description:</label>
+            <textarea type="description" name="task-description" id="task-description" rows="10" cols="30"></textarea>
+            <label for="priority">Priority:</label>
+            <select name="priority" id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="form-buttons">
+                <button type="button" id="confirm-task-dialog">Confirm</button>
+                <button type="button" id="cancel-task-dialog">Cancel</button>
+            </div>
         </form>
     </dialog>
     <dialog id="create-section-dialog">
         <form action="">
+            <h2>Add New Section</h2>
             <label for="section-title">Title:</label>
             <input type="text" name="section-title" id="section-title">
-            <button type="button" id="confirm-section-dialog">Confirm</button>
-            <button type="button" id="cancel-section-dialog">Cancel</button>
+            <div class="form-buttons">
+                <button type="button" id="confirm-section-dialog">Confirm</button>
+                <button type="button" id="cancel-section-dialog">Cancel</button>
+            </div>
         </form>
     </dialog>
 </body>
