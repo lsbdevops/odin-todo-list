@@ -9,6 +9,7 @@
     --light-bg-colour: #bfdbfe;
     --medium-bg-colour: #2563eb;
     --dark-bg-colour: #1e3a8a;
+    --task-bg-color: rgba(30, 58, 138, 0.4);
     --primary-text-colour: #f8fafc;
     --secondary-text-colour: #f1f5f9;
     --section-width: 350px;
@@ -55,15 +56,41 @@ header {
     background-color: #dbeafe;
 }
 
-.section > h2 {
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title > button {
+    height: 35px;
+    width: 35px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background-color: #dbeafe;
+}
+
+.section-title > button > img {
+    height: 35px;
+    width: 35px;
+}
+
+.section-title > button > img:hover {
+    cursor: pointer;
+    filter: invert(16%) sepia(83%) saturate(2018%) hue-rotate(216deg) brightness(91%) contrast(94%);
+}
+
+
+.section-title > h2 {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     letter-spacing: 0.1rem;
     padding: 0px;
     margin: 10px;
 }
 
-.tasks {
+.section-tasks {
     display: grid;
     grid-auto-rows: minmax(200px, 1fr);
     row-gap: 20px;
@@ -71,8 +98,18 @@ header {
 
 .task {
     border: 1px solid black;
-    background-color: var(--dark-bg-colour);
-    opacity: 40%;
+    background-color: var(--task-bg-color);
+    padding: 5px 15px;
+    text-align: center;
+
+}
+
+.task > h3 {
+    font-size: 2rem;
+}
+
+.task > p {
+    font-size: 1.5rem;
 }
 
 footer {
