@@ -3,11 +3,13 @@ import {default as createToDoTask} from './createToDoTask.js';
 import {default as renderTask} from './renderTask.js';
 import {default as toDoValidator} from './toDoValidator.js';
 
-export default function taskInterface(taskProperties) {
+export default function taskInterface(taskProperties, section) {
     const task = createToDoTask(taskProperties, toDoValidator());
 
-    // TODO: Add task to the project section.
+    // Add task to the project section.
+    section.addTaskToSection(task);
 
     // Render the task on the page.
-    document.querySelector('.section-tasks').appendChild(renderTask(task));
+    const sectionTasksContainer = document.querySelector(`.section[data-section-id="${section.getId()}"] > .section-tasks`);
+    sectionTasksContainer.appendChild(renderTask(task));
 };

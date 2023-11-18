@@ -2,10 +2,10 @@
 import {default as validator} from './toDoValidator.js';
 import {default as sectionInterface} from './sectionInterface.js'
 
-export default function addSectionFormEvents() {
+export default function addSectionFormEvents(activeProject) {
     openAddSectionForm();
     closeAddSectionForm();
-    submitAddSectionForm();
+    submitAddSectionForm(activeProject);
 }
 
 function openAddSectionForm() {
@@ -28,7 +28,7 @@ function closeAddSectionForm() {
     });
 };
 
-function submitAddSectionForm() {
+function submitAddSectionForm(activeProject) {
     const confirmSectionForm = document.querySelector('#confirm-section-dialog');
     const addSectionForm = document.querySelector('#create-section-dialog');
 
@@ -38,7 +38,7 @@ function submitAddSectionForm() {
         const title = document.querySelector('#section-title').value;
 
         if (validator().validateTitle(title)) {
-            sectionInterface({title});
+            sectionInterface({title}, activeProject);
             resetAddSectionForm();
             addSectionForm.close();
         }

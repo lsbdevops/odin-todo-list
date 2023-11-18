@@ -21,9 +21,15 @@ export default function createProject(projectProperties, validator) {
         })
     }
 
+    const getProjectSection = (sectionId) => project[sectionId];
+
+    const getNumberOfSections = () => project.length;
+
     return {getTitle,
         setTitle,
         addSectionToProject,
         getProjectSections,
+        getProjectSection,
+        getNumberOfSections,
     };
 };

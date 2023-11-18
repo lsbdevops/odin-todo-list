@@ -2,10 +2,10 @@
 import {default as validator} from './toDoValidator.js';
 import {default as createTask} from './taskInterface.js';
 
-export default function addTaskFormEvents(sectionAddTaskButton) {
+export default function addTaskFormEvents(sectionAddTaskButton, activeProject) {
     openAddTaskForm(sectionAddTaskButton);
     closeAddTaskForm();
-    submitAddTaskForm();
+    submitAddTaskForm(activeProject);
 }
 
 function openAddTaskForm(sectionAddTaskButton) {
@@ -13,6 +13,10 @@ function openAddTaskForm(sectionAddTaskButton) {
     const addTaskForm = document.querySelector('#create-task-dialog');
 
     sectionAddTaskButton.addEventListener('click', function(e) {
+        // Change the dialog button data to refer to the current section to add the task.
+        const confirmTaskFormButton = document.querySelector('#confirm-task-dialog');
+        confirmTaskFormButton.setAttribute('data-section-id', `${sectionAddTaskButton.dataset.sectionId}`);
+
         addTaskForm.showModal();
     });
 };
@@ -27,7 +31,7 @@ function closeAddTaskForm() {
     });
 };
 
-function submitAddTaskForm() {
+function submitAddTaskForm(activeProject) {
     // Add event listener to submit task form values.
     const confirmTaskForm = document.querySelector('#confirm-task-dialog');
     const addTaskForm = document.querySelector('#create-task-dialog');
@@ -44,7 +48,8 @@ function submitAddTaskForm() {
         // Validate the input.
         if (validateAddTaskForm(taskProperties, validator())) {
             // Use interface to create task.
-            createTask(taskProperties);
+            const currentSection = activeProject.getProjectSection(this.dataset.sectionId);
+            createTask(taskProperties, currentSection);
             resetAddTaskForm();
             addTaskForm.close();
         }
