@@ -39,15 +39,15 @@ function submitAddTaskForm(activeProject) {
         e.preventDefault();
 
         // Get the user input from applicable form fields.
-        const title = document.querySelector('#task-title').value;
-        const dueDate = document.querySelector('#task-due-date').value;
-
-        const taskProperties = {title, dueDate};
+        const taskProperties = getAddTaskFormInputs();
 
         // Validate the input.
         if (validateAddTaskForm(taskProperties, validator())) {
+            // Get the current section identifier and create the task.
+            const currentSectionId = this.dataset.sectionId;
+            const currentSection = activeProject.getProjectSection(currentSectionId);
+            
             // Use interface to create task.
-            const currentSection = activeProject.getProjectSection(this.dataset.sectionId);
             createTask(taskProperties, currentSection);
             resetAddTaskForm();
             addTaskForm.close();
@@ -72,6 +72,13 @@ function validateAddTaskForm(taskProperties, validator) {
 function resetAddTaskForm() {
     document.querySelector('#task-title').value = '';
     document.querySelector('#task-due-date').value = '';
+}
+
+function getAddTaskFormInputs() {
+    const title = document.querySelector('#task-title').value;
+    const dueDate = document.querySelector('#task-due-date').value;
+
+    return {title, dueDate};
 }
 
 export {openAddTaskForm};
