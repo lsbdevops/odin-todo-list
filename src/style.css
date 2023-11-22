@@ -123,6 +123,12 @@ header {
     text-align: center;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+}
+
+.task:hover {
+    cursor: pointer;
+    outline: 2px solid var(--dark-bg-colour);
 }
 
 .task > h3 {
@@ -202,7 +208,7 @@ dialog[open] > form > input, dialog[open] > form > textarea, dialog[open] > form
     margin-top: 15px;
 }
 
-.form-buttons > button {
+.form-buttons > button, #task-view > button {
     font-size: 2rem;
     padding: 10px 30px;
     background-color: var(--dark-bg-colour);
@@ -211,8 +217,33 @@ dialog[open] > form > input, dialog[open] > form > textarea, dialog[open] > form
     border: 1px solid var(--medium-bg-colour);
 }
 
-.form-buttons > button:hover {
+.form-buttons > button:hover, #task-view > button:hover {
     outline: 4px solid var(--light-bg-colour);
     color: var(--secondary-text-colour);
     cursor: pointer;
+}
+
+#task-view[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-details {
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-details > h3 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.task-details > p {
+    font-size: 2rem;
+}
+
+.task-details > .description {
+    border: 1px solid var(--dark-bg-colour);
+    padding: 15px;
 }

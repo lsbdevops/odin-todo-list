@@ -34,8 +34,8 @@
             <input type="date" name="task-due-date" id="task-due-date">
             <label for="task-description">Description:</label>
             <textarea type="description" name="task-description" id="task-description" rows="10" cols="30"></textarea>
-            <label for="priority">Priority:</label>
-            <select name="priority" id="priority">
+            <label for="task-priority">Priority:</label>
+            <select name="task-priority" id="task-priority">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
@@ -56,6 +56,10 @@
                 <button type="button" id="cancel-section-dialog">Cancel</button>
             </div>
         </form>
+    </dialog>
+    <dialog id="task-view">
+        <div class="task-details"></div>
+        <button type="button" id="close-task-view">Close</button>
     </dialog>
 </body>
 </html>

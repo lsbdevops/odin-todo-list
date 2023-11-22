@@ -1,6 +1,7 @@
 'use strict';
 import {default as validator} from './toDoValidator.js';
 import {default as createTask} from './taskInterface.js';
+import {default as createElement} from './createDOMElement.js';
 
 export default function addTaskFormEvents(activeProject) {
     closeAddTaskForm();
@@ -56,13 +57,21 @@ function submitAddTaskForm(activeProject) {
 };
 
 function validateAddTaskForm(taskProperties, validator) {
-    const {title, dueDate} = taskProperties;
+    const {title, dueDate, description, priority} = taskProperties;
 
     if (!validator.validateTitle(title)) {
         return false;
     }
 
     if (!validator.validateDate(dueDate)) {
+        return false;
+    }
+
+    if (!validator.validateDescription(description)) {
+        return false;
+    }
+
+    if (!validator.validatePriority(priority)) {
         return false;
     }
 
@@ -77,8 +86,27 @@ function resetAddTaskForm() {
 function getAddTaskFormInputs() {
     const title = document.querySelector('#task-title').value;
     const dueDate = document.querySelector('#task-due-date').value;
+    const description = document.querySelector('#task-description').value;
+    const priority = document.querySelector('#task-priority').value;
 
-    return {title, dueDate};
+    return {title, dueDate, description, priority};
 }
 
-export {openAddTaskForm};
+function closeViewTaskDialog() {
+    const viewTaskDialog = document.querySelector('#task-view');
+    const closeButton = document.querySelector('#close-task-view');
+
+    closeButton.addEventListener('click', function(e) {
+        resetViewTaskDialog();
+        viewTaskDialog.close();
+    })
+} 
+
+function resetViewTaskDialog() {
+    document.querySelector('#task-view > .task-details').remove();
+    const viewTaskContainer = createElement({'tag': 'div', 'cls': 'task-details'});
+
+    document.querySelector('#task-view').insertBefore(viewTaskContainer, document.querySelector('#close-task-view'));
+}
+
+export {openAddTaskForm, closeViewTaskDialog};
