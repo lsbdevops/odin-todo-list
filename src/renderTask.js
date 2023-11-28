@@ -50,8 +50,38 @@ function addTaskEventListeners() {
 
             viewTaskContainer.append(taskHeader, taskDescription, taskDueDate, taskPriority);
 
+            const editButton = createElement({'tag': 'button', 'text': 'Edit', 'attributes': {'type': 'button'}})
+            editTask(editButton, task);
+            document.querySelector('#task-view').appendChild(editButton);
+
             document.querySelector('#task-view').showModal();
         })
+    }
+
+    const editTask = function(button, task) {
+        button.addEventListener('click', function(e) {
+            // Open edit task form.
+            const editTaskDialog = document.querySelector('#task-edit');
+            editTaskDialog.showModal();
+
+            document.querySelector('#edit-task-title').value = task.getTitle();
+            document.querySelector('#edit-task-due-date').value = task.getDueDate();
+            document.querySelector('#edit-task-description').value = task.getDescription();
+            document.querySelector('#edit-task-priority').value = task.getPriority();
+
+            // Submit form details.
+
+            // Update task properties.
+        })
+    }
+
+    const closeEditTaskDialog = function(button) {
+        button.addEventListener('click', function(e) {
+            document.querySelector('#task-edit').closeModal();
+        })
+
+
+
     }
     return {deleteTask, viewTask};
 }
