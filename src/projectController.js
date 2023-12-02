@@ -2,7 +2,8 @@
 import {default as createProject} from './createProject.js';
 import {default as createSection} from './sectionInterface.js';
 import {default as sectionForm} from './createSectionForm.js';
-import {default as taskForm, closeViewTaskDialog} from './createTaskForm.js';
+import {default as taskForm} from './createTaskForm.js';
+import {default as taskViewer} from './taskViewer.js';
 
 export default function init() {
     const projectData = projects();
@@ -39,7 +40,7 @@ function createNewProject(projectProperties) {
     createSection({'title': 'To Do'}, project);
     sectionForm(project).addEvents();
     taskForm().addEvents(project);
-    closeViewTaskDialog();
+    taskViewer().closeTask();
 
     return project;
 }

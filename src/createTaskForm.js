@@ -1,7 +1,6 @@
 'use strict';
 import {default as validator} from './toDoValidator.js';
 import {default as createTask} from './taskInterface.js';
-import {default as createElement} from './createDOMElement.js';
 
 export default function taskForm() {
     // Dialog element.
@@ -109,22 +108,3 @@ export default function taskForm() {
 
     return {openForm, addEvents};
 }
-
-function closeViewTaskDialog() {
-    const viewTaskDialog = document.querySelector('#task-view');
-    const closeButton = document.querySelector('#close-task-view');
-
-    closeButton.addEventListener('click', function(e) {
-        resetViewTaskDialog();
-        viewTaskDialog.close();
-    })
-} 
-
-function resetViewTaskDialog() {
-    document.querySelector('#task-view > .task-details').remove();
-    const viewTaskContainer = createElement({'tag': 'div', 'cls': 'task-details'});
-
-    document.querySelector('#task-view').insertBefore(viewTaskContainer, document.querySelector('#close-task-view'));
-}
-
-export {closeViewTaskDialog};

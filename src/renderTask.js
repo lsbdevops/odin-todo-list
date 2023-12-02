@@ -1,5 +1,6 @@
 'use strict';
 import {default as createElement} from './createDOMElement.js';
+import {default as taskViewer} from './taskViewer.js';
 import deleteIcon from './assets/delete.svg';
 
 
@@ -9,7 +10,10 @@ export default function renderTask(task, eventListeners) {
     const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getDueDate()}`});
     const deleteTaskButton = createElement({'tag': 'button', 'attributes': {'type': 'button'}});
 
-    eventListeners.viewTask(taskContainer, task);
+    const viewer = taskViewer(task);
+    taskContainer.addEventListener('click', () => {
+        viewer.viewTask();
+    })
 
     const deleteTaskIcon = new Image();
     deleteTaskIcon.src = deleteIcon;
@@ -39,25 +43,6 @@ function addTaskEventListeners() {
         })
     }
 
-    const viewTask = function(taskContainer, task) {
-        taskContainer.addEventListener('click', function(e) {
-            const viewTaskContainer = document.querySelector('#task-view > .task-details');
-
-            const taskHeader = createElement({'tag': 'h3', 'text': `${task.getTitle()}`});
-            const taskDescription = createElement({'tag': 'p', 'cls': 'description', 'text': `${task.getDescription()}`});
-            const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getDueDate()}`});
-            const taskPriority = createElement({'tag': 'p', 'text': `Priority: ${task.getPriority()}`});
-
-            viewTaskContainer.append(taskHeader, taskDescription, taskDueDate, taskPriority);
-
-            const editButton = createElement({'tag': 'button', 'text': 'Edit', 'attributes': {'type': 'button'}})
-            editTask(editButton, task);
-            document.querySelector('#task-view').appendChild(editButton);
-
-            document.querySelector('#task-view').showModal();
-        })
-    }
-
     const editTask = function(button, task) {
         button.addEventListener('click', function(e) {
             // Open edit task form.
@@ -79,11 +64,8 @@ function addTaskEventListeners() {
         button.addEventListener('click', function(e) {
             document.querySelector('#task-edit').closeModal();
         })
-
-
-
     }
-    return {deleteTask, viewTask};
+    return {deleteTask};
 }
 
 export {addTaskEventListeners};
