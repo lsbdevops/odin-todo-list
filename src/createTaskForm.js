@@ -3,93 +3,111 @@ import {default as validator} from './toDoValidator.js';
 import {default as createTask} from './taskInterface.js';
 import {default as createElement} from './createDOMElement.js';
 
-export default function addTaskFormEvents(activeProject) {
-    closeAddTaskForm();
-    submitAddTaskForm(activeProject);
-}
+export default function taskForm() {
+    // Dialog element.
+    const dialog = document.querySelector('#create-task-dialog');
 
-function openAddTaskForm(sectionAddTaskButton) {
-    // Add event listener to open add task form.
-    const addTaskForm = document.querySelector('#create-task-dialog');
+    // Button elements.
+    const confirmButton = document.querySelector('#confirm-task-dialog');
+    const cancelButton = document.querySelector('#cancel-task-dialog');
 
-    sectionAddTaskButton.addEventListener('click', function(e) {
-        // Change the dialog button data to refer to the current section to add the task.
-        const confirmTaskFormButton = document.querySelector('#confirm-task-dialog');
-        confirmTaskFormButton.setAttribute('data-section-id', `${sectionAddTaskButton.dataset.sectionId}`);
+    // Input field inputs.
+    const titleField = document.querySelector('#task-title');
+    const dueDateField = document.querySelector('#task-due-date');
+    const descriptionField = document.querySelector('#task-description');
+    const priorityField = document.querySelector('#task-priority');
+    const fields = {titleField, dueDateField, descriptionField, priorityField};
 
-        addTaskForm.showModal();
-    });
-};
+    // Validator function.
+    const fieldValidator = validator();
 
-function closeAddTaskForm() {
-    // Add event listener to close add task form via cancel button.
-    const cancelTaskForm = document.querySelector('#cancel-task-dialog');
-    const addTaskForm = document.querySelector('#create-task-dialog');
+    const addEvents = (activeProject) => {
+        closeForm();
+        submitForm(activeProject);
+    }
 
-    cancelTaskForm.addEventListener('click', function(e) {
-        addTaskForm.close();
-    });
-};
+    const openForm = (addTaskButton) => {
+        // Change the dialog button data to refer to the current section ID to add the task.
+        addTaskButton.addEventListener('click', () => {
+            confirmButton.setAttribute('data-section-id', `${addTaskButton.dataset.sectionId}`);
+            dialog.showModal();
+        });
+    };
 
-function submitAddTaskForm(activeProject) {
-    // Add event listener to submit task form values.
-    const confirmTaskForm = document.querySelector('#confirm-task-dialog');
-    const addTaskForm = document.querySelector('#create-task-dialog');
+    const closeForm = () => {
+        cancelButton.addEventListener('click', () => {
+            dialog.close();
+        });
+    };
 
-    confirmTaskForm.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // Get the user input from applicable form fields.
-        const taskProperties = getAddTaskFormInputs();
-
-        // Validate the input.
-        if (validateAddTaskForm(taskProperties, validator())) {
-            // Get the current section identifier and create the task.
-            const currentSectionId = this.dataset.sectionId;
-            const currentSection = activeProject.getProjectSection(currentSectionId);
-            
-            // Use interface to create task.
-            createTask(taskProperties, currentSection);
-            resetAddTaskForm();
-            addTaskForm.close();
+    const resetForm = () => {
+        for (const [fieldName, fieldElement] of Object.entries(fields)) {
+            if (fieldName === 'priorityField') {
+                fieldElement.value = 'low';
+            }
+            else {
+                fieldElement.value = '';
+            }
         }
-    });
-};
-
-function validateAddTaskForm(taskProperties, validator) {
-    const {title, dueDate, description, priority} = taskProperties;
-
-    if (!validator.validateTitle(title)) {
-        return false;
     }
 
-    if (!validator.validateDate(dueDate)) {
-        return false;
+    const submitForm = (activeProject) => {
+        confirmButton.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Get the user input for task from applicable form fields.
+            const taskProperties = getFieldValues();
+
+            // If all fields are valid, create the task.
+            if (fieldsValid(taskProperties, fieldValidator)) {
+                // Get the current section identifier and create the task.
+                const currentSectionId = this.dataset.sectionId;
+                const currentSection = activeProject.getProjectSection(currentSectionId);
+            
+                // Use interface to create task.
+                createTask(taskProperties, currentSection);
+                resetForm();
+                dialog.close();
+            }
+        })
     }
 
-    if (!validator.validateDescription(description)) {
-        return false;
+    const getFieldValues = () => {
+        const fieldValues = {};
+
+        for (const [fieldName, fieldElement] of Object.entries(fields)) {
+            const propertyName = fieldName.replace('Field', '');
+            const propertyValue = fieldElement.value;
+
+            fieldValues[propertyName] = propertyValue
+        }
+
+        return fieldValues;
     }
 
-    if (!validator.validatePriority(priority)) {
-        return false;
+    const fieldsValid = (fieldInputs, validatorFunction) => {
+        const {title, dueDate, description, priority} = fieldInputs;
+
+        if (!validatorFunction.validateTitle(title)) {
+            return false;
+        }
+    
+        if (!validatorFunction.validateDate(dueDate)) {
+            return false;
+        }
+    
+        if (!validatorFunction.validateDescription(description)) {
+            return false;
+        }
+    
+        if (!validatorFunction.validatePriority(priority)) {
+            return false;
+        }
+    
+        return true;
     }
 
-    return true;
-}
-
-function resetAddTaskForm() {
-    document.querySelector('#task-title').value = '';
-    document.querySelector('#task-due-date').value = '';
-}
-
-function getAddTaskFormInputs() {
-    const title = document.querySelector('#task-title').value;
-    const dueDate = document.querySelector('#task-due-date').value;
-    const description = document.querySelector('#task-description').value;
-    const priority = document.querySelector('#task-priority').value;
-
-    return {title, dueDate, description, priority};
+    return {openForm, addEvents};
 }
 
 function closeViewTaskDialog() {
@@ -109,4 +127,4 @@ function resetViewTaskDialog() {
     document.querySelector('#task-view').insertBefore(viewTaskContainer, document.querySelector('#close-task-view'));
 }
 
-export {openAddTaskForm, closeViewTaskDialog};
+export {closeViewTaskDialog};

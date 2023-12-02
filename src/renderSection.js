@@ -1,6 +1,6 @@
 'use strict';
 import {default as createElement} from './createDOMElement.js';
-import {openAddTaskForm} from './createTaskForm.js';
+import {default as taskForm} from './createTaskForm.js';
 import addTaskIcon from './assets/plus-box.svg';
 
 export default function renderSection(section) {
@@ -15,7 +15,7 @@ export default function renderSection(section) {
     addTask.alt = 'Add Task Button';
 
     addTaskButton.appendChild(addTask);
-    openAddTaskForm(addTaskButton);
+    taskForm().openForm(addTaskButton);
 
     sectionTitleContainer.appendChild(sectionTitle);
     sectionTitleContainer.appendChild(addTaskButton);
