@@ -11,7 +11,7 @@ export default function taskForm() {
     const confirmButton = document.querySelector('#confirm-task-dialog');
     const cancelButton = document.querySelector('#cancel-task-dialog');
 
-    // Input field inputs.
+    // Input fields.
     const titleField = document.querySelector('#task-title');
     const dueDateField = document.querySelector('#task-due-date');
     const descriptionField = document.querySelector('#task-description');
@@ -22,9 +22,9 @@ export default function taskForm() {
     const fieldValidator = validator();
 
     const addEvents = (activeProject) => {
-        closeForm();
+        cancelForm();
         submitForm(activeProject);
-    }
+    };
 
     const openForm = (addTaskButton) => {
         // Change the dialog button data to refer to the current section ID to add the task.
@@ -34,7 +34,7 @@ export default function taskForm() {
         });
     };
 
-    const closeForm = () => {
+    const cancelForm = () => {
         cancelButton.addEventListener('click', () => {
             dialog.close();
         });
@@ -47,9 +47,9 @@ export default function taskForm() {
             }
             else {
                 fieldElement.value = '';
-            }
-        }
-    }
+            };
+        };
+    };
 
     const submitForm = (activeProject) => {
         confirmButton.addEventListener('click', function(e) {
@@ -68,9 +68,9 @@ export default function taskForm() {
                 createTask(taskProperties, currentSection);
                 resetForm();
                 dialog.close();
-            }
-        })
-    }
+            };
+        });
+    };
 
     const getFieldValues = () => {
         const fieldValues = {};
@@ -80,29 +80,29 @@ export default function taskForm() {
             const propertyValue = fieldElement.value;
 
             fieldValues[propertyName] = propertyValue
-        }
+        };
 
         return fieldValues;
-    }
+    };
 
     const fieldsValid = (fieldInputs, validatorFunction) => {
         const {title, dueDate, description, priority} = fieldInputs;
 
         if (!validatorFunction.validateTitle(title)) {
             return false;
-        }
+        };
     
         if (!validatorFunction.validateDate(dueDate)) {
             return false;
-        }
+        };
     
         if (!validatorFunction.validateDescription(description)) {
             return false;
-        }
+        };
     
         if (!validatorFunction.validatePriority(priority)) {
             return false;
-        }
+        };
     
         return true;
     }
