@@ -1,6 +1,6 @@
 'use strict';
 import {default as createToDoTask} from './createToDoTask.js';
-import {default as renderTask, addTaskEventListeners} from './renderTask.js';
+import {default as taskCard} from './renderTask.js';
 import {default as toDoValidator} from './toDoValidator.js';
 
 export default function createTask(taskProperties, section) {
@@ -11,7 +11,7 @@ export default function createTask(taskProperties, section) {
 
     // Render the task on the page.
     const sectionTasksContainer = document.querySelector(`.section[data-section-id="${section.getId()}"] > .section-tasks`);
-    sectionTasksContainer.appendChild(renderTask(task, addTaskEventListeners()));
+    sectionTasksContainer.appendChild(taskCard(task).createTaskCard());
 };
 
 function getTaskIdentifiers(section) {

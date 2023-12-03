@@ -3,46 +3,78 @@ import {default as createElement} from './createDOMElement.js';
 import {default as taskViewer} from './taskViewer.js';
 import deleteIcon from './assets/delete.svg';
 
+export default function taskCard(task) {
+    // Task properties.
+    const taskId = task.getId();
+    const title = task.getTitle();
+    const dueDate = task.getDueDate();
 
-export default function renderTask(task, eventListeners) {
-    const taskContainer = createElement({'tag': 'div', 'cls': 'task', 'attributes': {'data-task-id': `${task.getId()}`}});
-    const taskHeader = createElement({'tag': 'h3', 'text': `${task.getTitle()}`});
-    const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getDueDate()}`});
-    const deleteTaskButton = createElement({'tag': 'button', 'attributes': {'type': 'button'}});
+    const createTaskCard = () => {
+        const taskElements = createTaskElements();
+        const deleteButton = createDeleteButton();
+        taskElements.appendChild(deleteButton);
 
-    const viewer = taskViewer(task);
-    taskContainer.addEventListener('click', () => {
-        viewer.viewTask();
-    })
+        return taskElements;
+    }
 
-    const deleteTaskIcon = new Image();
-    deleteTaskIcon.src = deleteIcon;
-    deleteTaskIcon.alt = 'Delete Task Button';
-    deleteTaskButton.appendChild(deleteTaskIcon);
-    eventListeners.deleteTask(deleteTaskButton, task);
+    const createTaskContainer = () => {
+        const taskContainer = createElement({'tag': 'div', 'cls': 'task', 'attributes': {'data-task-id': `${taskId}`}});
+        viewTask(taskContainer);
 
-    taskContainer.appendChild(taskHeader);
-    taskContainer.appendChild(taskDueDate);
-    taskContainer.appendChild(deleteTaskButton);
+        return taskContainer;
+    };
 
-    return taskContainer;
-}
+    const createTaskElements = () => {
+        const taskContainer = createTaskContainer();
+        const taskHeader = createElement({'tag': 'h3', 'text': `${title}`});
+        const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${dueDate}`});
 
-function addTaskEventListeners() {
-    const deleteTask = function(button, task) {
-        button.addEventListener('click', function(e) {
+        taskContainer.append(taskHeader, taskDueDate);
+
+        return taskContainer;
+    };
+
+    const createDeleteButton = () => {
+        const deleteButton = createElement({'tag': 'button', 'attributes': {'type': 'button'}});
+        deleteButton.appendChild(createDeleteIcon());
+
+        deleteTask(deleteButton, task);
+
+        return deleteButton;
+    };
+
+    const createDeleteIcon = () => {
+        const deleteTaskIcon = new Image();
+        deleteTaskIcon.src = deleteIcon;
+        deleteTaskIcon.alt = 'Delete Task Button';
+
+        return deleteTaskIcon;
+    };
+
+    const deleteTask = (button, task) => {
+        button.addEventListener('click', (e) => {
             // Remove task from section.
             const section = task.getSection();
-            section.deleteTaskFromSection(task.getId());
+            section.deleteTaskFromSection(taskId);
 
             // Remove task from DOM.
-            document.querySelector(`.section[data-section-id="${task.getSectionId()}"] .task[data-task-id="${task.getId()}"]`).remove();
+            document.querySelector(`.section[data-section-id="${task.getSectionId()}"] .task[data-task-id="${taskId}"]`).remove();
 
             // Ensure the view task event listener is not triggered.
             e.stopPropagation();
-        })
-    }
+        });
+    };
 
+    const viewTask = (container) => {
+        container.addEventListener('click', () => {
+            taskViewer(task).viewTask();
+        });
+    };
+
+    return {createTaskCard};
+};
+
+function renderTask(task, eventListeners) {
     const editTask = function(button, task) {
         button.addEventListener('click', function(e) {
             // Open edit task form.
@@ -67,5 +99,3 @@ function addTaskEventListeners() {
     }
     return {deleteTask};
 }
-
-export {addTaskEventListeners};
