@@ -1,7 +1,7 @@
 'use strict';
 import {default as createElement} from './createDOMElement.js';
 
-export default function taskViewer(task) {
+export default function taskViewer() {
     // Dialog element.
     const dialog = document.querySelector('#task-view');
 
@@ -11,8 +11,8 @@ export default function taskViewer(task) {
     // Button elements.
     const closeButton = document.querySelector('#close-task-view');
 
-    const viewTask = () => {
-        createTaskElements();
+    const viewTask = (task) => {
+        createTaskElements(task);
         dialog.showModal();
     };
     
@@ -27,7 +27,7 @@ export default function taskViewer(task) {
         detailsWrapper.replaceChildren();
     }
 
-    const createTaskElements = () => {
+    const createTaskElements = (task) => {
         const taskHeader = createElement({'tag': 'h3', 'text': `${task.getTitle()}`});
         const taskDescription = createElement({'tag': 'p', 'cls': 'description', 'text': `${task.getDescription()}`});
         const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getDueDate()}`});

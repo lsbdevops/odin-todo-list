@@ -19,7 +19,7 @@ export default function taskCard(task) {
 
     const createTaskContainer = () => {
         const taskContainer = createElement({'tag': 'div', 'cls': 'task', 'attributes': {'data-task-id': `${taskId}`}});
-        viewTask(taskContainer);
+        addViewTaskEvent(taskContainer);
 
         return taskContainer;
     };
@@ -38,7 +38,7 @@ export default function taskCard(task) {
         const deleteButton = createElement({'tag': 'button', 'attributes': {'type': 'button'}});
         deleteButton.appendChild(createDeleteIcon());
 
-        deleteTask(deleteButton, task);
+        addDeleteTaskEvent(deleteButton);
 
         return deleteButton;
     };
@@ -51,7 +51,7 @@ export default function taskCard(task) {
         return deleteTaskIcon;
     };
 
-    const deleteTask = (button, task) => {
+    const addDeleteTaskEvent = (button) => {
         button.addEventListener('click', (e) => {
             // Remove task from section.
             const section = task.getSection();
@@ -65,9 +65,9 @@ export default function taskCard(task) {
         });
     };
 
-    const viewTask = (container) => {
+    const addViewTaskEvent = (container) => {
         container.addEventListener('click', () => {
-            taskViewer(task).viewTask();
+            taskViewer().viewTask(task);
         });
     };
 

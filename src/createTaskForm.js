@@ -1,6 +1,6 @@
 'use strict';
 import {default as validator} from './toDoValidator.js';
-import {default as createTask} from './taskInterface.js';
+import {default as renderTask} from './taskInterface.js';
 
 export default function taskForm() {
     // Dialog element.
@@ -19,6 +19,9 @@ export default function taskForm() {
 
     // Validator function.
     const fieldValidator = validator();
+
+    // Task interface.
+    const taskInterface = renderTask();
 
     const addEvents = (activeProject) => {
         cancelForm();
@@ -64,7 +67,7 @@ export default function taskForm() {
                 const currentSection = activeProject.getProjectSection(currentSectionId);
             
                 // Use interface to create task.
-                createTask(taskProperties, currentSection);
+                taskInterface.createTask(taskProperties, currentSection);
                 resetForm();
                 dialog.close();
             };
