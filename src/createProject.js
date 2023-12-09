@@ -3,6 +3,7 @@
 export default function createProject(projectProperties, validator) {
     const project = [];
     let {title} = projectProperties;
+    let activeTask = null;
 
     const getTitle = () => title;
     const setTitle = (newTitle) => {
@@ -25,11 +26,16 @@ export default function createProject(projectProperties, validator) {
 
     const getNumberOfSections = () => project.length;
 
+    const getActiveTask = () => activeTask;
+    const setActiveTask = (task) => activeTask = task;
+
     return {getTitle,
         setTitle,
         addSectionToProject,
         getProjectSections,
         getProjectSection,
         getNumberOfSections,
+        getActiveTask,
+        setActiveTask,
     };
 };

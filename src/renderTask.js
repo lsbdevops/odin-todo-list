@@ -1,9 +1,10 @@
 'use strict';
 import {default as createElement} from './createDOMElement.js';
 import {default as taskViewer} from './taskViewer.js';
+import {default as taskInterface} from './taskInterface.js'
 import deleteIcon from './assets/delete.svg';
 
-export default function taskCard(task) {
+export default function taskCard(task, activeProject) {
     // Task properties.
     const taskId = task.getId();
     const title = task.getTitle();
@@ -26,8 +27,8 @@ export default function taskCard(task) {
 
     const createTaskElements = () => {
         const taskContainer = createTaskContainer();
-        const taskHeader = createElement({'tag': 'h3', 'text': `${title}`});
-        const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${dueDate}`});
+        const taskHeader = createElement({'tag': 'h3', 'text': `${title}`, 'cls': 'task-card-title'});
+        const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${dueDate}`, 'cls': 'task-card-due-date'});
 
         taskContainer.append(taskHeader, taskDueDate);
 
@@ -53,13 +54,8 @@ export default function taskCard(task) {
 
     const addDeleteTaskEvent = (button) => {
         button.addEventListener('click', (e) => {
-            // Remove task from section.
-            const section = task.getSection();
-            section.deleteTaskFromSection(taskId);
-
-            // Remove task from DOM.
-            document.querySelector(`.section[data-section-id="${task.getSectionId()}"] .task[data-task-id="${taskId}"]`).remove();
-
+            taskInterface().deleteTask(task);
+            
             // Ensure the view task event listener is not triggered.
             e.stopPropagation();
         });
@@ -67,35 +63,9 @@ export default function taskCard(task) {
 
     const addViewTaskEvent = (container) => {
         container.addEventListener('click', () => {
-            taskViewer().viewTask(task);
+            taskViewer(activeProject).viewTask(task);
         });
     };
 
     return {createTaskCard};
 };
-
-function renderTask(task, eventListeners) {
-    const editTask = function(button, task) {
-        button.addEventListener('click', function(e) {
-            // Open edit task form.
-            const editTaskDialog = document.querySelector('#task-edit');
-            editTaskDialog.showModal();
-
-            document.querySelector('#edit-task-title').value = task.getTitle();
-            document.querySelector('#edit-task-due-date').value = task.getDueDate();
-            document.querySelector('#edit-task-description').value = task.getDescription();
-            document.querySelector('#edit-task-priority').value = task.getPriority();
-
-            // Submit form details.
-
-            // Update task properties.
-        })
-    }
-
-    const closeEditTaskDialog = function(button) {
-        button.addEventListener('click', function(e) {
-            document.querySelector('#task-edit').closeModal();
-        })
-    }
-    return {deleteTask};
-}

@@ -34,6 +34,8 @@ export default function createProjectSection(sectionProperties, validator) {
         });
     };
 
+    const getTask = (taskId) => section[taskId];
+
     return {getTitle, 
         setTitle,   
         getId,
@@ -42,5 +44,6 @@ export default function createProjectSection(sectionProperties, validator) {
         deleteTaskFromSection,
         getNumberOfTasks,
         getAllTasks,
+        getTask,
     };
 };

@@ -1,9 +1,7 @@
 'use strict';
 import {default as createProject} from './createProject.js';
 import {default as createSection} from './sectionInterface.js';
-import {default as sectionForm} from './createSectionForm.js';
-import {default as taskForm} from './createTaskForm.js';
-import {default as taskViewer} from './taskViewer.js';
+import {default as formController} from './formController.js';
 
 export default function init() {
     const projectData = projects();
@@ -38,9 +36,7 @@ function createNewProject(projectProperties) {
 
     // Create a default section & initial event listeners for the dialog forms for adding sections & tasks.
     createSection({'title': 'To Do'}, project);
-    sectionForm(project).addEvents();
-    taskForm().addEvents(project);
-    taskViewer().closeTask();
+    formController(project).addFormEvents();
 
     return project;
 }

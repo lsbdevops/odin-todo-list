@@ -1,7 +1,7 @@
 'use strict';
 import {default as createElement} from './createDOMElement.js';
 
-export default function taskViewer() {
+export default function taskViewer(activeProject) {
     // Dialog element.
     const dialog = document.querySelector('#task-view');
 
@@ -13,6 +13,8 @@ export default function taskViewer() {
 
     const viewTask = (task) => {
         createTaskElements(task);
+        activeProject.setActiveTask(task);
+
         dialog.showModal();
     };
     
@@ -23,9 +25,14 @@ export default function taskViewer() {
         });
     };
 
+    const refreshTaskView = () => {
+        resetDialog();
+        viewTask(activeProject.getActiveTask());
+    };
+
     const resetDialog = () => {
         detailsWrapper.replaceChildren();
-    }
+    };
 
     const createTaskElements = (task) => {
         const taskHeader = createElement({'tag': 'h3', 'text': `${task.getTitle()}`});
@@ -34,9 +41,7 @@ export default function taskViewer() {
         const taskPriority = createElement({'tag': 'p', 'text': `Priority: ${task.getPriority()}`});
 
         detailsWrapper.append(taskHeader, taskDescription, taskDueDate, taskPriority);
-
-        return;
     };
 
-    return {viewTask, closeTask};
+    return {viewTask, closeTask, refreshTaskView};
 }

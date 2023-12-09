@@ -1,8 +1,8 @@
 'use strict';
-import {default as validator} from './toDoValidator.js';
-import {default as renderTask} from './taskInterface.js';
+import {default as Validator} from './toDoValidator.js';
+import {default as TaskInterface} from './taskInterface.js';
 
-export default function taskForm() {
+export default function taskForm(activeProject) {
     // Dialog element.
     const dialog = document.querySelector('#create-task-dialog');
 
@@ -18,12 +18,12 @@ export default function taskForm() {
     const fields = {titleField, dueDateField, descriptionField, priorityField};
 
     // Validator function.
-    const fieldValidator = validator();
+    const fieldValidator = Validator();
 
     // Task interface.
-    const taskInterface = renderTask();
+    const taskInterface = TaskInterface(activeProject);
 
-    const addEvents = (activeProject) => {
+    const addEvents = () => {
         cancelForm();
         submitForm(activeProject);
     };
@@ -53,7 +53,7 @@ export default function taskForm() {
         };
     };
 
-    const submitForm = (activeProject) => {
+    const submitForm = () => {
         confirmButton.addEventListener('click', function(e) {
             e.preventDefault();
 
@@ -81,7 +81,7 @@ export default function taskForm() {
             const propertyName = fieldName.replace('Field', '');
             const propertyValue = fieldElement.value;
 
-            fieldValues[propertyName] = propertyValue
+            fieldValues[propertyName] = propertyValue;
         };
 
         return fieldValues;
@@ -107,7 +107,7 @@ export default function taskForm() {
         };
     
         return true;
-    }
+    };
 
     return {openForm, addEvents};
 }
