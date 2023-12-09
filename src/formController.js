@@ -15,7 +15,6 @@ export default function formController(activeProject) {
         taskForm.addEvents();
         taskViewer.closeTask();
         editForm.addEvents();
-
     }
 
     return {addFormEvents};

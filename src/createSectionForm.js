@@ -1,6 +1,6 @@
 'use strict';
 import {default as validator} from './toDoValidator.js';
-import {default as sectionInterface} from './sectionInterface.js';
+import {default as SectionInterface} from './sectionInterface.js';
 
 export default function sectionForm(activeProject) {
     // Dialog element.
@@ -13,6 +13,9 @@ export default function sectionForm(activeProject) {
 
     // Input fields.
     const titleField = document.querySelector('#section-title');
+
+    // Section interface.
+    const sectionInterface = SectionInterface(activeProject);
 
     const addEvents = () => {
         openForm();
@@ -39,7 +42,7 @@ export default function sectionForm(activeProject) {
             const title = titleField.value;
     
             if (validator().validateTitle(title)) {
-                sectionInterface({title}, activeProject);
+                sectionInterface.createSection({title});
                 resetForm();
                 dialog.close();
             };

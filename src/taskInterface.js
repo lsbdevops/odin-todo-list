@@ -31,12 +31,9 @@ export default function taskInterface(activeProject) {
     };
 
     const addTaskToDOM = (task, section) => {
-        // Get the section tasks container element by section ID number.
-        const sectionContainer = document.querySelector(`.section[data-section-id="${section.getId()}"] > .section-tasks`);
-
         // Create task card and append.
         const card = taskCard(task, activeProject).createTaskCard();
-        sectionContainer.appendChild(card);
+        section.getSectionElement().appendChild(card);
 
         // Return a reference to the card element.
         return card;
@@ -53,7 +50,7 @@ export default function taskInterface(activeProject) {
     }
 
     const deleteTaskFromDOM = (task) => {
-        document.querySelector(`.section[data-section-id="${task.getSectionId()}"] .task[data-task-id="${task.getId()}"]`).remove();
+        task.getCardElement().remove();
     }
 
     const editTask = (task, newTaskProperties) => {

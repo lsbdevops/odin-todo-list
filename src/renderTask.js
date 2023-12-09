@@ -19,7 +19,7 @@ export default function taskCard(task, activeProject) {
     }
 
     const createTaskContainer = () => {
-        const taskContainer = createElement({'tag': 'div', 'cls': 'task', 'attributes': {'data-task-id': `${taskId}`}});
+        const taskContainer = createElement({'tag': 'div', 'cls': 'task'});
         addViewTaskEvent(taskContainer);
 
         return taskContainer;

@@ -3,6 +3,7 @@
 export default function createProjectSection(sectionProperties, validator) {
     const section = [];
     let {title, id} = sectionProperties;
+    let sectionElement = null;
 
     const getTitle = () => title;
     const setTitle = (newTitle) => {
@@ -15,6 +16,9 @@ export default function createProjectSection(sectionProperties, validator) {
     const setId = (newId) => {
         id = newId;
     }
+
+    const getSectionElement = () => sectionElement;
+    const setSectionElement = (sectionReference) => sectionElement = sectionReference; 
     
     const addTaskToSection = (task) => {
         section.push(task);
@@ -40,6 +44,8 @@ export default function createProjectSection(sectionProperties, validator) {
         setTitle,   
         getId,
         setId,
+        getSectionElement,
+        setSectionElement,
         addTaskToSection, 
         deleteTaskFromSection,
         getNumberOfTasks,

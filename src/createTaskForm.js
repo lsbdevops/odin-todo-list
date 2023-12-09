@@ -28,10 +28,9 @@ export default function taskForm(activeProject) {
         submitForm(activeProject);
     };
 
-    const openForm = (addTaskButton) => {
-        // Change the dialog button data to refer to the current section ID to add the task.
+    const openForm = (addTaskButton, section) => {
         addTaskButton.addEventListener('click', () => {
-            confirmButton.setAttribute('data-section-id', `${addTaskButton.dataset.sectionId}`);
+            activeProject.setActiveSection(section);
             dialog.showModal();
         });
     };
@@ -62,12 +61,8 @@ export default function taskForm(activeProject) {
 
             // If all fields are valid, create the task.
             if (fieldsValid(taskProperties, fieldValidator)) {
-                // Get the current section identifier and create the task.
-                const currentSectionId = this.dataset.sectionId;
-                const currentSection = activeProject.getProjectSection(currentSectionId);
-            
                 // Use interface to create task.
-                taskInterface.createTask(taskProperties, currentSection);
+                taskInterface.createTask(taskProperties, activeProject.getActiveSection());
                 resetForm();
                 dialog.close();
             };
