@@ -19,6 +19,8 @@ export default function createProjectSection(sectionProperties, validator) {
 
     const getSectionElement = () => sectionElement;
     const setSectionElement = (sectionReference) => sectionElement = sectionReference; 
+
+    const getSectionTasksElement = () => sectionElement.querySelector('.section-tasks');
     
     const addTaskToSection = (task) => {
         section.push(task);
@@ -46,6 +48,7 @@ export default function createProjectSection(sectionProperties, validator) {
         setId,
         getSectionElement,
         setSectionElement,
+        getSectionTasksElement,
         addTaskToSection, 
         deleteTaskFromSection,
         getNumberOfTasks,

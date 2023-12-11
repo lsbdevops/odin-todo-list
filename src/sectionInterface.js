@@ -12,10 +12,7 @@ export default function sectionInterface(activeProject) {
         const section = createProjectSection(sectionProperties, validator);
 
         addSectionToMemory(section);
-
-        // Add section to the DOM, and set reference to the section tasks container in the DOM.
-        const sectionElementReference = addSectionToDOM(section);
-        section.setSectionElement(sectionElementReference.querySelector('.section-tasks'));
+        addSectionToDOM(section);
     };
 
     const addSectionToMemory = (section) => {
@@ -29,5 +26,18 @@ export default function sectionInterface(activeProject) {
         return sectionPageElement;
     };
 
-    return {createSection};
+    const deleteSection = (section) => {
+        deleteSectionFromMemory(section);
+        deleteSectionFromDOM(section);
+    };
+
+    const deleteSectionFromMemory = (section) => {
+        activeProject.deleteSectionFromProject(section);
+    };
+
+    const deleteSectionFromDOM = (section) => {
+        section.getSectionElement().remove();
+    };
+
+    return {createSection, deleteSection};
 };

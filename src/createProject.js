@@ -21,7 +21,11 @@ export default function createProject(projectProperties, validator) {
         project.forEach((section) => {
             console.log(section.getTitle());
         })
-    }
+    };
+
+    const deleteSectionFromProject = (projectSection) => {
+        project[projectSection.getId()] = null;
+    };
 
     const getProjectSection = (sectionId) => project[sectionId];
 
@@ -35,6 +39,7 @@ export default function createProject(projectProperties, validator) {
     return {getTitle,
         setTitle,
         addSectionToProject,
+        deleteSectionFromProject,
         getProjectSections,
         getProjectSection,
         getNumberOfSections,

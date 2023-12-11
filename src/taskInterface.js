@@ -33,7 +33,7 @@ export default function taskInterface(activeProject) {
     const addTaskToDOM = (task, section) => {
         // Create task card and append.
         const card = taskCard(task, activeProject).createTaskCard();
-        section.getSectionElement().appendChild(card);
+        section.getSectionTasksElement().appendChild(card);
 
         // Return a reference to the card element.
         return card;
