@@ -23,7 +23,7 @@ export default function sectionInterface(activeProject) {
     };
 
     const addSectionToDOM = (section) => {
-        const sectionPageElement = renderSection(section, activeProject);
+        const sectionPageElement = renderSection(section, activeProject).createSectionCard();
         document.querySelector('.content').insertBefore(sectionPageElement, document.querySelector('.add-section'));
 
         return sectionPageElement;

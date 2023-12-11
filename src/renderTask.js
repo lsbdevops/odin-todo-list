@@ -6,7 +6,6 @@ import deleteIcon from './assets/delete.svg';
 
 export default function taskCard(task, activeProject) {
     // Task properties.
-    const taskId = task.getId();
     const title = task.getTitle();
     const dueDate = task.getDueDate();
 
