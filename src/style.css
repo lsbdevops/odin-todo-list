@@ -12,7 +12,7 @@
     --task-bg-color: rgba(30, 58, 138, 0.4);
     --primary-text-colour: #f8fafc;
     --secondary-text-colour: #f1f5f9;
-    --section-width: 350px;
+    --section-width: 300px;
 }
 
 body {
@@ -43,7 +43,7 @@ header {
 .content {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(var(--section-width), 0.25fr);
+    grid-auto-columns: minmax(var(--section-width), 0.1fr);
     overflow-x: auto;
     column-gap: 2%;
     background-color: var(--light-bg-colour);
@@ -54,6 +54,7 @@ header {
     border: 1px solid black;
     padding: 15px;
     background-color: #dbeafe;
+    border-radius: 15px;
 }
 
 .add-section {
@@ -62,6 +63,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 15px;
 }
 
 .add-section > h2 {
@@ -112,7 +114,7 @@ header {
 
 .section-tasks {
     display: grid;
-    grid-auto-rows: minmax(150px, 1fr);
+    grid-auto-rows: minmax(100px, 1fr);
     row-gap: 20px;
 }
 
@@ -124,6 +126,8 @@ header {
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 1px 1px var(--dark-bg-colour);
 }
 
 .task:hover {
@@ -132,11 +136,14 @@ header {
 }
 
 .task > h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin: 10px 0px;
+    overflow-wrap: break-word;
 }
 
 .task > p {
     font-size: 1.5rem;
+    margin: 10px 0px;
 }
 
 .task > button {
