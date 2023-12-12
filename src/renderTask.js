@@ -8,21 +8,15 @@ export default function taskCard(task, activeProject) {
     // Task properties.
     const title = task.getTitle();
     const dueDate = task.getDueDate();
+    const priority = task.getPriority();
 
     const createTaskCard = () => {
         const taskElements = createTaskElements();
-        const deleteButton = createDeleteButton();
-        taskElements.appendChild(deleteButton);
+        const toolBar = createTaskToolbar();
+        taskElements.appendChild(toolBar);
 
         return taskElements;
     }
-
-    const createTaskContainer = () => {
-        const taskContainer = createElement({'tag': 'div', 'cls': 'task'});
-        addViewTaskEvent(taskContainer);
-
-        return taskContainer;
-    };
 
     const createTaskElements = () => {
         const taskContainer = createTaskContainer();
@@ -32,6 +26,43 @@ export default function taskCard(task, activeProject) {
         taskContainer.append(taskHeader, taskDueDate);
 
         return taskContainer;
+    };
+
+    const createTaskContainer = () => {
+        const taskContainer = createElement({'tag': 'div', 'cls': 'task'});
+        addViewTaskEvent(taskContainer);
+
+        return taskContainer;
+    };
+
+    const createTaskToolbar = () => {
+        const toolBar = createElement({'tag': 'div', 'cls': 'task-toolbar'});
+        const deleteButton = createDeleteButton();
+        const priorityIndicator = createPriorityIndicator();
+
+        toolBar.append(priorityIndicator, deleteButton);
+
+        return toolBar;
+    };
+
+    const createPriorityIndicator = () => {
+        const priorityIndicator = createElement({'tag': 'div', 'cls': 'priority-indicator'});
+
+        switch(priority) {
+            case 'low':
+                priorityIndicator.style.backgroundColor = 'green';
+                break;
+            case 'medium':
+                priorityIndicator.style.backgroundColor = 'orange';
+                break;
+            case 'high':
+                priorityIndicator.style.backgroundColor = 'red';
+                break;
+        };
+
+        priorityIndicator.textContent = priority[0].toUpperCase() + priority.slice(1);
+
+        return priorityIndicator;
     };
 
     const createDeleteButton = () => {
