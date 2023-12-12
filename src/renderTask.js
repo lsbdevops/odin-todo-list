@@ -39,8 +39,9 @@ export default function taskCard(task, activeProject) {
         const toolBar = createElement({'tag': 'div', 'cls': 'task-toolbar'});
         const deleteButton = createDeleteButton();
         const priorityIndicator = createPriorityIndicator();
+        const completedCheckbox = createCompletedCheckbox();
 
-        toolBar.append(priorityIndicator, deleteButton);
+        toolBar.append(priorityIndicator, completedCheckbox, deleteButton);
 
         return toolBar;
     };
@@ -63,6 +64,13 @@ export default function taskCard(task, activeProject) {
         priorityIndicator.textContent = priority[0].toUpperCase() + priority.slice(1);
 
         return priorityIndicator;
+    };
+
+    const createCompletedCheckbox = () => {
+        const completedCheckbox = createElement({'tag': 'input', 'attributes': {'type': 'checkbox'}});
+        addCompleteTaskEvent(completedCheckbox);
+
+        return completedCheckbox;
     };
 
     const createDeleteButton = () => {
@@ -94,6 +102,21 @@ export default function taskCard(task, activeProject) {
     const addViewTaskEvent = (container) => {
         container.addEventListener('click', () => {
             taskViewer(activeProject).viewTask(task);
+        });
+    };
+
+    const addCompleteTaskEvent = (checkbox) => {
+        checkbox.addEventListener('click', (e) => {
+            const taskCard = task.getCardElement();
+            if (checkbox.checked) {
+                taskCard.style.opacity = '50%';
+            }
+            else {
+                taskCard.style.opacity = '100%';
+            }
+
+            // Ensure the view task event listener is not triggered.
+            e.stopPropagation();
         });
     };
 

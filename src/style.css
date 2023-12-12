@@ -166,6 +166,14 @@ header {
     filter: invert(16%) sepia(83%) saturate(2018%) hue-rotate(216deg) brightness(91%) contrast(94%);
 }
 
+.task-toolbar > input {
+    transform: scale(1.5);
+}
+
+.task-toolbar > input:hover {
+    cursor: pointer;
+}
+
 .priority-indicator {
     flex-basis: 50%;
     height: 80%;
