@@ -66,10 +66,16 @@ export default function taskInterface(activeProject) {
     };
 
     const editTaskInDOM = (task, newTaskProperties) => {
-        const taskCard = task.getCardElement();
+        const taskCardEl = task.getCardElement();
 
-        taskCard.querySelector('.task-card-title').textContent = newTaskProperties.title;
-        taskCard.querySelector('.task-card-due-date').textContent = 'Due date: ' + newTaskProperties.dueDate;
+        taskCardEl.querySelector('.task-card-title').textContent = newTaskProperties.title;
+        taskCardEl.querySelector('.task-card-due-date').textContent = 'Due date: ' + newTaskProperties.dueDate;
+
+        // Create new priority tab and replace the current tab.
+        const priorityIndicator = taskCard(task).createPriorityIndicator();
+        const taskToolbar = taskCardEl.querySelector('.task-toolbar');
+        taskCardEl.querySelector('.priority-indicator').remove();
+        taskToolbar.prepend(priorityIndicator);
     };
 
     const addAllSectionTasksToDOM = (section) => {

@@ -97,5 +97,5 @@ export default function taskCard(task, activeProject) {
         });
     };
 
-    return {createTaskCard};
+    return {createTaskCard, createPriorityIndicator};
 };
