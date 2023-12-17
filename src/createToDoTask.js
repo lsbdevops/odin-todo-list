@@ -1,3 +1,4 @@
+import {format} from 'date-fns';
 'use strict';
 
 export default function createToDoTask(toDoProperties, validator) {
@@ -8,7 +9,15 @@ export default function createToDoTask(toDoProperties, validator) {
     // Getter methods.
     const getTitle = () => title;
     const getDescription = () => description;
-    const getDueDate = () => dueDate;
+    const getDueDate = () => {
+        // Return 'dd/MM/yy' formatted date.
+        const dateArray = dueDate.split('-');
+        // Zero index the month element.
+        dateArray[1] -= 1;
+        const formattedDate = format(new Date(...dateArray), 'dd/MM/yy');
+
+        return formattedDate;
+    };
     const getPriority = () => priority;
     const getId = () => id;
     const getSectionId = () => sectionId;

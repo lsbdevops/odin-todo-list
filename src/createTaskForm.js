@@ -43,11 +43,18 @@ export default function taskForm(activeProject) {
 
     const resetForm = () => {
         for (const [fieldName, fieldElement] of Object.entries(fields)) {
-            if (fieldName === 'priorityField') {
-                fieldElement.value = 'low';
-            }
-            else {
-                fieldElement.value = '';
+            switch(fieldName) {
+                case 'priorityField':
+                    fieldElement.value = 'low';
+                    break;
+                case 'dueDateField':
+                    // Set default due date as today's date (format: YYYY-MM-DD).
+                    const today = new Date();
+                    fieldElement.value = `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}`;;
+                    break;
+                default:
+                    fieldElement.value = '';
+                    break;
             };
         };
     };
@@ -104,5 +111,5 @@ export default function taskForm(activeProject) {
         return true;
     };
 
-    return {openForm, addEvents};
+    return {openForm, addEvents, resetForm};
 }

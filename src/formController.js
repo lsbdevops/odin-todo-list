@@ -13,6 +13,7 @@ export default function formController(activeProject) {
     const addFormEvents = () => {
         sectionForm.addEvents();
         taskForm.addEvents();
+        taskForm.resetForm();
         taskViewer.closeTask();
         editForm.addEvents();
     }
