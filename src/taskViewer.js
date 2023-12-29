@@ -37,7 +37,7 @@ export default function taskViewer(activeProject) {
     const createTaskElements = (task) => {
         const taskHeader = createElement({'tag': 'h3', 'text': `${task.getTitle()}`});
         const taskDescription = createElement({'tag': 'p', 'cls': 'description', 'text': `${task.getDescription()}`});
-        const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getDueDate()}`});
+        const taskDueDate = createElement({'tag': 'p', 'text': `Due Date: ${task.getFormattedDueDate()}`});
         const taskPriority = createElement({'tag': 'p', 'text': `Priority: ${task.getPriority()}`});
 
         detailsWrapper.append(taskHeader, taskDescription, taskDueDate, taskPriority);

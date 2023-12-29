@@ -9,7 +9,8 @@ export default function createToDoTask(toDoProperties, validator) {
     // Getter methods.
     const getTitle = () => title;
     const getDescription = () => description;
-    const getDueDate = () => {
+    const getDueDate = () => dueDate;
+    const getFormattedDueDate = () => {
         // Return 'dd/MM/yy' formatted date.
         const dateArray = dueDate.split('-');
         // Zero index the month element.
@@ -57,7 +58,8 @@ export default function createToDoTask(toDoProperties, validator) {
     
     return {getTitle, 
         getDescription, 
-        getDueDate, 
+        getDueDate,
+        getFormattedDueDate, 
         getPriority, 
         getId,
         getSectionId,
