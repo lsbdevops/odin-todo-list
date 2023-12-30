@@ -10,15 +10,21 @@ export default function projectInterface(projectDataReference) {
     const createNewProject = (projectProperties) => {
         const project = createProject(projectProperties, projectDataReference);
         projectDataReference.addProject(project);
-        switchProject(project.getId());
+
+        // If the created project is not the first project created, switch to the new project.
+        if (projectDataReference.getNumberOfProjects() > 1) {
+            switchProject(project.getId());
+        };
     
         // Create a default section & initial event listeners for the dialog forms for adding sections & tasks. 
-        
         sectionInterface(project).createSection({'title': 'To Do'});
-        formController(project).addFormEvents();
+
+        project.formController = formController(project);
+        project.formController.addFormEvents();
     };
 
     const switchProject = (projectId) => {
+        projectDataReference.getActiveProject().formController.removeFormEvents();
         projectDataReference.setActiveProject(projectId);
 
         // Render the new project in the DOM.
@@ -26,6 +32,7 @@ export default function projectInterface(projectDataReference) {
         const contentContainer = createElement({'tag': 'div', 'cls': 'content'});
         document.body.insertBefore(contentContainer, document.querySelector('footer'));
         contentContainer.appendChild(createAddSection());
+        document.querySelector('#active-project-title').textContent = projectDataReference.getActiveProject().getTitle();
     };
 
     const createAddSection = () => {

@@ -19,24 +19,31 @@ export default function editForm(activeProject) {
     const priorityField = document.querySelector('#edit-task-priority');
     const fields = {titleField, dueDateField, descriptionField, priorityField};
 
+    // Abort controller.
+    const controller = new AbortController();
+
     const addEvents = () => {
         openForm();
         closeForm();
         submitForm();
-    }
+    };
+
+    const removeEvents = () => {
+        controller.abort();
+    };
 
     const openForm = () => {
         editButton.addEventListener('click', () => {
             // Set fields for current task and display in edit form.
             setFormFields(activeProject.getActiveTask());
             dialog.showModal();
-        });
+        }, {signal: controller.signal});
     };
 
     const closeForm = () => {
         cancelButton.addEventListener('click', () => {
             dialog.close();
-        });
+        }, {signal: controller.signal});
     };
 
     const submitForm = () => {
@@ -56,8 +63,8 @@ export default function editForm(activeProject) {
 
                 dialog.close();
             };
-        })
-    }
+        }, {signal: controller.signal});
+    };
 
     const setFormFields = (task) => {
         for (const [fieldName, fieldElement] of Object.entries(fields)) {
@@ -101,5 +108,5 @@ export default function editForm(activeProject) {
         return true;
     };
 
-    return {addEvents};
+    return {addEvents, removeEvents};
 };

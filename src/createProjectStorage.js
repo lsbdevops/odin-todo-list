@@ -16,10 +16,13 @@ export default function createProjectStorage() {
 
     const getProjectsReference = () => projects;
 
+    const getNumberOfProjects = () => projects.length;
+
     return {
         addProject,
         getActiveProject,
         setActiveProject,
         getProjectsReference,
+        getNumberOfProjects,
     };
 };

@@ -1,13 +1,13 @@
 'use strict';
 
-export default function createProject(projectProperties, projectDataReference, validator) {
+export default function createProject(title, projectDataReference, validator) {
     const project = [];
-    let {title} = projectProperties;
-    const id = projectDataReference.getProjectsReference().length;
+    const id = projectDataReference.getNumberOfProjects();
     let activeTask = null;
     let activeSection = null;
 
     const getTitle = () => title;
+
     const setTitle = (newTitle) => {
         if (validator.validateTitle(newTitle)) {
             title = newTitle;

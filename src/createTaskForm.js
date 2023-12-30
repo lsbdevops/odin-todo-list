@@ -23,22 +23,29 @@ export default function taskForm(activeProject) {
     // Task interface.
     const taskInterface = TaskInterface(activeProject);
 
+    // Abort controller.
+    const controller = new AbortController();
+
     const addEvents = () => {
         cancelForm();
         submitForm(activeProject);
+    };
+
+    const removeEvents = () => {
+        controller.abort();
     };
 
     const openForm = (addTaskButton, section) => {
         addTaskButton.addEventListener('click', () => {
             activeProject.setActiveSection(section);
             dialog.showModal();
-        });
+        }, {signal: controller.signal});
     };
 
     const cancelForm = () => {
         cancelButton.addEventListener('click', () => {
             dialog.close();
-        });
+        }, {signal: controller.signal});
     };
 
     const resetForm = () => {
@@ -73,7 +80,7 @@ export default function taskForm(activeProject) {
                 resetForm();
                 dialog.close();
             };
-        });
+        }, {signal: controller.signal});
     };
 
     const getFieldValues = () => {
@@ -111,5 +118,5 @@ export default function taskForm(activeProject) {
         return true;
     };
 
-    return {openForm, addEvents, resetForm};
+    return {openForm, addEvents, resetForm, removeEvents};
 }

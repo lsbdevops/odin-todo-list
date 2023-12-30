@@ -41,9 +41,14 @@ export default function projectForm(projectData) {
 
             if (validator.validateTitle(title)); {
                 projectInterface.createNewProject(title);
+                resetForm();
                 dialog.close();                
             };
         });
+    };
+
+    const resetForm = () => {
+        document.querySelector('#project-title').value = '';
     };
 
     return {addEvents};

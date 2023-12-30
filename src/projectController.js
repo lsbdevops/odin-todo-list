@@ -13,6 +13,6 @@ export default function init() {
 
     projectForm(projectData).addEvents();
 
-    projectInterface.createNewProject({'title': 'My First Project'});
+    projectInterface.createNewProject('My First Project');
     document.querySelector('#active-project-title').textContent = projectData.getActiveProject().getTitle();
 };

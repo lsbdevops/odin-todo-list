@@ -18,5 +18,12 @@ export default function formController(activeProject) {
         editForm.addEvents();
     };
 
-    return {addFormEvents};
+    const removeFormEvents = () => {
+        sectionForm.removeEvents();
+        taskForm.removeEvents();
+        taskViewer.removeEvents();
+        editForm.removeEvents();
+    }
+
+    return {addFormEvents, removeFormEvents};
 }

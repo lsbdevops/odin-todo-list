@@ -17,22 +17,29 @@ export default function sectionForm(activeProject) {
     // Section interface.
     const sectionInterface = SectionInterface(activeProject);
 
+    // Abort controller.
+    const controller = new AbortController();
+
     const addEvents = () => {
         openForm();
         cancelForm();
         submitForm();
     };
 
+    const removeEvents = () => {
+        controller.abort();
+    };
+
     const openForm = () => {
         addButton.addEventListener('click', () => {
             dialog.showModal();
-        });
+        }, {signal: controller.signal});
     };
 
     const cancelForm = () => {
         cancelButton.addEventListener('click', () => {
             dialog.close();
-        });
+        }, {signal: controller.signal});
     };
 
     const submitForm = () => {
@@ -46,13 +53,13 @@ export default function sectionForm(activeProject) {
                 resetForm();
                 dialog.close();
             };
-        });
+        }, {signal: controller.signal});
     };
     
     const resetForm = () => {
         titleField.value = '';
     };
 
-    return {addEvents};
+    return {addEvents, removeEvents};
 }
 

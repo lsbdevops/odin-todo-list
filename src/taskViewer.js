@@ -11,6 +11,9 @@ export default function taskViewer(activeProject) {
     // Button elements.
     const closeButton = document.querySelector('#close-task-view');
 
+    // Abort controller.
+    const controller = new AbortController();
+
     const viewTask = (task) => {
         createTaskElements(task);
         activeProject.setActiveTask(task);
@@ -22,7 +25,7 @@ export default function taskViewer(activeProject) {
         closeButton.addEventListener('click', () => {
             resetDialog();
             dialog.close();
-        });
+        }, {signal: controller.signal});
     };
 
     const refreshTaskView = () => {
@@ -43,5 +46,9 @@ export default function taskViewer(activeProject) {
         detailsWrapper.append(taskHeader, taskDescription, taskDueDate, taskPriority);
     };
 
-    return {viewTask, closeTask, refreshTaskView};
+    const removeEvents = () => {
+        controller.abort();
+    };
+
+    return {viewTask, closeTask, refreshTaskView, removeEvents};
 }
