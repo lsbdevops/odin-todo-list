@@ -70,6 +70,10 @@ header {
     margin-bottom: 10px;
 }
 
+#projects-drop-down li:last-child {
+    margin-bottom: 0px;
+}
+
 .content {
     display: grid;
     grid-auto-flow: column;

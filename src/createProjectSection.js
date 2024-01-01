@@ -33,11 +33,14 @@ export default function createProjectSection(sectionProperties, validator) {
     const getNumberOfTasks = () => section.length;
 
     const getAllTasks = () => {
+        const tasks = []
         section.forEach((task) => {
             if (task) {
-                console.log(task.getTitle())
-            }
+                tasks.push(task);
+            };
         });
+
+        return tasks;
     };
 
     const getTask = (taskId) => section[taskId];

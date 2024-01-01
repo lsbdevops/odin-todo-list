@@ -17,5 +17,5 @@ export default function init() {
     projectInterface.createNewProject('My First Project');
     document.querySelector('#active-project-title').textContent = projectData.getActiveProject().getTitle();
 
-    projectsDropDownMenu(projectData.getProjectsReference()).addMenuEvents();
+    projectsDropDownMenu(projectData).addMenuEvents();
 };

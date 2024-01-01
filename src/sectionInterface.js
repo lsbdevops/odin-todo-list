@@ -39,5 +39,5 @@ export default function sectionInterface(activeProject) {
         section.getSectionElement().remove();
     };
 
-    return {createSection, deleteSection};
+    return {createSection, deleteSection, addSectionToDOM};
 };

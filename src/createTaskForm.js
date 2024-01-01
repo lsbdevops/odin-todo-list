@@ -57,7 +57,10 @@ export default function taskForm(activeProject) {
                 case 'dueDateField':
                     // Set default due date as today's date (format: YYYY-MM-DD).
                     const today = new Date();
-                    fieldElement.value = `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}`;;
+                    const year = today.getFullYear();
+                    const month = String(today.getMonth() + 1).padStart(2, '0');
+                    const day = String(today.getDate()).padStart(2, '0');
+                    fieldElement.value = `${year}-${month}-${day}`;
                     break;
                 default:
                     fieldElement.value = '';
@@ -119,4 +122,4 @@ export default function taskForm(activeProject) {
     };
 
     return {openForm, addEvents, resetForm, removeEvents};
-}
+};

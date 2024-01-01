@@ -18,10 +18,15 @@ export default function createProject(title, projectDataReference, validator) {
         project.push(projectSection);
     };
 
-    const getProjectSections = () => {
+    const getAllSections = () => {
+        const sections = [];
         project.forEach((section) => {
-            console.log(section.getTitle());
-        })
+            if (section) {
+                sections.push(section);
+            };
+        });
+
+        return sections;
     };
 
     const deleteSectionFromProject = (projectSection) => {
@@ -45,7 +50,7 @@ export default function createProject(title, projectDataReference, validator) {
         setTitle,
         addSectionToProject,
         deleteSectionFromProject,
-        getProjectSections,
+        getAllSections,
         getProjectSection,
         getNumberOfSections,
         getActiveTask,

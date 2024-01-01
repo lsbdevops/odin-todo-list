@@ -55,7 +55,7 @@ export default function taskInterface(activeProject) {
 
     const editTask = (task, newTaskProperties) => {
         editTaskInMemory(task, newTaskProperties);
-        editTaskInDOM(task, newTaskProperties);
+        editTaskInDOM(task);
     };
 
     const editTaskInMemory = (task, newTaskProperties) => {
@@ -65,11 +65,11 @@ export default function taskInterface(activeProject) {
         };
     };
 
-    const editTaskInDOM = (task, newTaskProperties) => {
+    const editTaskInDOM = (task) => {
         const taskCardEl = task.getCardElement();
 
-        taskCardEl.querySelector('.task-card-title').textContent = newTaskProperties.title;
-        taskCardEl.querySelector('.task-card-due-date').textContent = 'Due date: ' + newTaskProperties.dueDate;
+        taskCardEl.querySelector('.task-card-title').textContent = task.getTitle();
+        taskCardEl.querySelector('.task-card-due-date').textContent = 'Due Date: ' + task.getFormattedDueDate();
 
         // Create new priority tab and replace the current tab.
         const priorityIndicator = taskCard(task).createPriorityIndicator();
@@ -89,5 +89,5 @@ export default function taskInterface(activeProject) {
         };
     };
 
-    return {createTask, deleteTask, editTask};
+    return {createTask, deleteTask, editTask, addTaskToDOM};
 }
