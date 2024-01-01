@@ -9,6 +9,7 @@ export default function taskCard(task, activeProject) {
     const title = task.getTitle();
     const dueDate = task.getFormattedDueDate();
     const priority = task.getPriority();
+    const isCompleted = task.getCompletionStatus();
 
     const createTaskCard = () => {
         const taskElements = createTaskElements();
@@ -30,6 +31,9 @@ export default function taskCard(task, activeProject) {
 
     const createTaskContainer = () => {
         const taskContainer = createElement({'tag': 'div', 'cls': 'task'});
+        if (isCompleted) {
+            taskContainer.classList.add('completed');
+        };
         addViewTaskEvent(taskContainer);
 
         return taskContainer;
@@ -68,6 +72,9 @@ export default function taskCard(task, activeProject) {
 
     const createCompletedCheckbox = () => {
         const completedCheckbox = createElement({'tag': 'input', 'attributes': {'type': 'checkbox'}});
+        if (isCompleted) {
+            completedCheckbox.checked = true;
+        };
         addCompleteTaskEvent(completedCheckbox);
 
         return completedCheckbox;
@@ -107,12 +114,13 @@ export default function taskCard(task, activeProject) {
 
     const addCompleteTaskEvent = (checkbox) => {
         checkbox.addEventListener('click', (e) => {
+            task.changeCompletionStatus();
             const taskCard = task.getCardElement();
-            if (checkbox.checked) {
-                taskCard.style.opacity = '50%';
+            if (task.getCompletionStatus()) {
+                taskCard.classList.add('completed');
             }
             else {
-                taskCard.style.opacity = '100%';
+                taskCard.classList.remove('completed');
             }
 
             // Ensure the view task event listener is not triggered.

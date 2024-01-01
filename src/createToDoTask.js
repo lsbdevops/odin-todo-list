@@ -5,6 +5,7 @@ export default function createToDoTask(toDoProperties, validator) {
     // Deconstruct parameters.
     let {title, description, dueDate, priority, id, sectionId, section} = toDoProperties;
     let cardElement = null;
+    let taskCompleted = false;
 
     // Getter methods.
     const getTitle = () => title;
@@ -24,6 +25,7 @@ export default function createToDoTask(toDoProperties, validator) {
     const getSectionId = () => sectionId;
     const getSection = () => section;
     const getCardElement = () => cardElement;
+    const getCompletionStatus = () => taskCompleted;
 
     // Setter methods.
     const setDescription = (newDescription) => {
@@ -55,6 +57,9 @@ export default function createToDoTask(toDoProperties, validator) {
     const setCardElement = (cardReference) => {
         cardElement = cardReference;
     }
+    const changeCompletionStatus = () => {
+        taskCompleted = (taskCompleted) ? false : true;
+    };
     
     return {getTitle, 
         getDescription, 
@@ -72,6 +77,8 @@ export default function createToDoTask(toDoProperties, validator) {
         setId,
         setSectionId,
         setCardElement,
+        changeCompletionStatus, 
+        getCompletionStatus,
     };
 };
 

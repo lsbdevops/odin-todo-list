@@ -164,6 +164,10 @@ header {
     box-shadow: 1px 1px var(--dark-bg-colour);
 }
 
+.task.completed {
+    opacity: 50%;
+}
+
 .task:hover {
     cursor: pointer;
     outline: 2px solid var(--dark-bg-colour);
