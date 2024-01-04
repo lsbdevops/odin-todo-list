@@ -60,6 +60,9 @@ export default function createToDoTask(toDoProperties, validator) {
     const changeCompletionStatus = () => {
         taskCompleted = (taskCompleted) ? false : true;
     };
+    const exportData = () => {
+        return {title, description, dueDate, priority, id, sectionId, section};
+    };
     
     return {getTitle, 
         getDescription, 
@@ -79,6 +82,7 @@ export default function createToDoTask(toDoProperties, validator) {
         setCardElement,
         changeCompletionStatus, 
         getCompletionStatus,
+        exportData,
     };
 };
 

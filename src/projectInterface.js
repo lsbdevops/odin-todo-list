@@ -26,34 +26,39 @@ export default function projectInterface(projectDataReference) {
     };
 
     const switchProject = (projectId) => {
-        // Remove the current project from  DOM.
+        // If there is already a project in the DOM, remove the current project from DOM.
         projectDataReference.getActiveProject().formController.removeFormEvents();
         document.querySelector('.content').remove();
 
-        // Set new active project & update page title.
+        // Set new active project.
         projectDataReference.setActiveProject(projectId);
         const newActiveProject = projectDataReference.getActiveProject();
-        document.querySelector('#active-project-title').textContent = newActiveProject.getTitle();
 
         // Re-insert default DOM content container and elements.
         const contentContainer = createElement({'tag': 'div', 'cls': 'content'});
         document.body.insertBefore(contentContainer, document.querySelector('footer'));
         contentContainer.appendChild(createAddSection());
 
-        // Re-create eventlisteners.
-        newActiveProject.formController = formController(newActiveProject);
-        newActiveProject.formController.addFormEvents();
+        renderProject(newActiveProject);
+    };
+
+    const renderProject = (project) => {
+        // Set title on page.
+        document.querySelector('#active-project-title').textContent = project.getTitle();
+
+        // Create eventlisteners.
+        project.formController = formController(project);
+        project.formController.addFormEvents();
 
         // Render the new project in the DOM.
-        newActiveProject.getAllSections().forEach((section) => {
-            sectionInterface(newActiveProject).addSectionToDOM(section);
+        project.getAllSections().forEach((section) => {
+            sectionInterface(project).addSectionToDOM(section);
 
             section.getAllTasks().forEach((task) => {
-                const newTaskCard = taskInterface(newActiveProject).addTaskToDOM(task, section);
+                const newTaskCard = taskInterface(project).addTaskToDOM(task, section);
                 task.setCardElement(newTaskCard); 
             });
         });
-
     };
 
     const createAddSection = () => {
@@ -71,5 +76,5 @@ export default function projectInterface(projectDataReference) {
         return container;
     }
 
-    return {createNewProject, switchProject};
+    return {createNewProject, switchProject, renderProject};
 };

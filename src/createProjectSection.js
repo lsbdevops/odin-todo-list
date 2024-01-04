@@ -45,6 +45,16 @@ export default function createProjectSection(sectionProperties, validator) {
 
     const getTask = (taskId) => section[taskId];
 
+    const exportData = () => {
+        const sectionData = [];
+
+        section.forEach((task) => {
+            sectionData.push(task.exportData());
+        });
+
+        return {title, id, 'data': sectionData};
+    };
+
     return {getTitle, 
         setTitle,   
         getId,
@@ -57,5 +67,6 @@ export default function createProjectSection(sectionProperties, validator) {
         getNumberOfTasks,
         getAllTasks,
         getTask,
+        exportData,
     };
 };

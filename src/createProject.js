@@ -46,6 +46,15 @@ export default function createProject(title, projectDataReference, validator) {
 
     const getId = () => id;
 
+    const exportData = () => {
+        const projectData = [];
+        project.forEach((section) => {
+            projectData.push(section.exportData());
+        });
+
+        return {title, 'data': projectData};
+    };
+
     return {getTitle,
         setTitle,
         addSectionToProject,
@@ -59,5 +68,6 @@ export default function createProject(title, projectDataReference, validator) {
         setActiveSection,
         getProjectDataReference,
         getId,
+        exportData,
     };
 };

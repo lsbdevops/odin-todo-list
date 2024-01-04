@@ -6,7 +6,7 @@ export default function createProjectStorage() {
 
     const addProject = (project) => {
         projects.push(project);
-    }
+    };
 
     const getActiveProject = () => projects[activeProject];
 
@@ -18,11 +18,23 @@ export default function createProjectStorage() {
 
     const getNumberOfProjects = () => projects.length;
 
+    const exportProjectsData = () => {
+        const projectsData = [];
+        
+        projects.forEach((project) => {
+            projectsData.push(project.exportData());
+        });
+
+        return projectsData;
+    };
+
+
     return {
         addProject,
         getActiveProject,
         setActiveProject,
         getProjectsReference,
         getNumberOfProjects,
+        exportProjectsData,
     };
 };
