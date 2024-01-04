@@ -2,7 +2,7 @@
 import {default as createProjectStorage} from './createProjectStorage.js';
 import {default as createProject} from './createProject.js';
 import {default as createSection} from './createProjectSection.js';
-import createToDoTask, {default as createTask} from './createToDoTask.js';
+import {default as createToDoTask} from './createToDoTask.js';
 import {default as validator} from './toDoValidator.js';
 
 // Check storage is available, code from: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -34,11 +34,12 @@ function storageAvailable(type) {
   }
 
 function importLocalStorage() {
-  const storedProjectsData = JSON.parse(localStorage.getItem('projectData'));
+  const storedProjectsData = JSON.parse(localStorage.getItem('projectsData'));
 
   const projectsData = createProjectStorage();
+  projectsData.setActiveProject(storedProjectsData.activeProjectId);
 
-  storedProjectsData.forEach((projectData) => {
+  storedProjectsData.data.forEach((projectData) => {
     //Create project if a title is present.
     if (projectData.title) {
       const project = createProject(projectData.title, projectsData, validator());
@@ -49,7 +50,8 @@ function importLocalStorage() {
           //Create all tasks and append to section.
           if (sectionData.data) {
             sectionData.data.forEach((taskData) => {
-            const task = createToDoTask((taskData, validator()));
+            taskData.section = section;
+            const task = createToDoTask(taskData, validator());
             section.addTaskToSection(task);
             });
           };
@@ -64,4 +66,8 @@ function importLocalStorage() {
   return projectsData;
 };
 
-export {storageAvailable, importLocalStorage}
+function saveLocalStorage(projectsData) {
+  localStorage.setItem('projectsData', JSON.stringify(projectsData.exportProjectsData()));
+};
+
+export {storageAvailable, importLocalStorage, saveLocalStorage}

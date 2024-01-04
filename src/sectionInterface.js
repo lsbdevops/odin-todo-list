@@ -2,9 +2,12 @@
 import {default as createProjectSection} from './createProjectSection.js';
 import {default as renderSection} from './renderSection.js';
 import {default as toDoValidator} from './toDoValidator.js';
+import {saveLocalStorage} from './localStorage.js';
 
 export default function sectionInterface(activeProject) {
     const validator = toDoValidator();
+
+    const projectDataReference = activeProject.getProjectDataReference();
 
     const createSection = (sectionProperties) => {
         // Set the section id to the current length of the project array.
@@ -17,6 +20,7 @@ export default function sectionInterface(activeProject) {
 
     const addSectionToMemory = (section) => {
         activeProject.addSectionToProject(section);
+        saveLocalStorage(projectDataReference);
     };
 
     const addSectionToDOM = (section) => {
@@ -29,6 +33,7 @@ export default function sectionInterface(activeProject) {
     const deleteSection = (section) => {
         deleteSectionFromMemory(section);
         deleteSectionFromDOM(section);
+        saveLocalStorage(projectDataReference);
     };
 
     const deleteSectionFromMemory = (section) => {

@@ -99,7 +99,7 @@ export default function taskCard(task, activeProject) {
 
     const addDeleteTaskEvent = (button) => {
         button.addEventListener('click', (e) => {
-            taskInterface().deleteTask(task);
+            taskInterface(activeProject).deleteTask(task);
             
             // Ensure the view task event listener is not triggered.
             e.stopPropagation();

@@ -2,10 +2,13 @@
 import {default as createToDoTask} from './createToDoTask.js';
 import {default as taskCard} from './renderTask.js';
 import {default as toDoValidator} from './toDoValidator.js';
+import {saveLocalStorage} from './localStorage.js';
 
 export default function taskInterface(activeProject) {
     // Declare validator.
     const validator = toDoValidator();
+
+    const projectsDataReference = activeProject.getProjectDataReference();
 
     const createTask = (taskProperties, section) => {
         // Create task in memory and add to the current section.
@@ -18,6 +21,7 @@ export default function taskInterface(activeProject) {
 
     const addTaskToMemory = (task, section) => {
         section.addTaskToSection(task);
+        saveLocalStorage(projectsDataReference);
     };
 
     const getTaskIdentifiers = (section) => {
@@ -42,16 +46,17 @@ export default function taskInterface(activeProject) {
     const deleteTask = (task) => {
         deleteTaskFromMemory(task);
         deleteTaskFromDOM(task);
-    }
+    };
 
     const deleteTaskFromMemory = (task) => {
         const section = task.getSection();
         section.deleteTaskFromSection(task.getId());
-    }
+        saveLocalStorage(projectsDataReference);
+    };
 
     const deleteTaskFromDOM = (task) => {
         task.getCardElement().remove();
-    }
+    };
 
     const editTask = (task, newTaskProperties) => {
         editTaskInMemory(task, newTaskProperties);
@@ -63,6 +68,7 @@ export default function taskInterface(activeProject) {
             const setFunctionName = 'set' + propertyName[0].toUpperCase() + propertyName.slice(1);
             task[setFunctionName](propertyValue);
         };
+        saveLocalStorage(projectsDataReference);
     };
 
     const editTaskInDOM = (task) => {
@@ -76,17 +82,6 @@ export default function taskInterface(activeProject) {
         const taskToolbar = taskCardEl.querySelector('.task-toolbar');
         taskCardEl.querySelector('.priority-indicator').remove();
         taskToolbar.prepend(priorityIndicator);
-    };
-
-    const addAllSectionTasksToDOM = (section) => {
-        for (let taskId = 0; taskId < section.getNumberOfTasks(); taskId++) {
-            const task = section.getTask(taskId);
-
-            if (task) {
-                addTaskToDOM(section.getTask(taskId), section);
-            };
-            
-        };
     };
 
     return {createTask, deleteTask, editTask, addTaskToDOM};

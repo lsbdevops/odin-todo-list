@@ -19,10 +19,10 @@ export default function createProjectStorage() {
     const getNumberOfProjects = () => projects.length;
 
     const exportProjectsData = () => {
-        const projectsData = [];
+        const projectsData = {'activeProjectId': activeProject, 'data': []};
         
         projects.forEach((project) => {
-            projectsData.push(project.exportData());
+            projectsData.data.push(project.exportData());
         });
 
         return projectsData;

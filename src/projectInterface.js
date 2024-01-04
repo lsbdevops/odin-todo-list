@@ -4,6 +4,7 @@ import {default as sectionInterface} from './sectionInterface.js';
 import {default as taskInterface} from './taskInterface.js';
 import {default as formController} from './formController.js';
 import {default as createElement} from './createDOMElement.js';
+import {saveLocalStorage} from './localStorage.js';
 import addSectionIcon from './assets/card-plus.svg';
 
 export default function projectInterface(projectDataReference) {
@@ -23,6 +24,8 @@ export default function projectInterface(projectDataReference) {
             project.formController = formController(project);
             project.formController.addFormEvents();
         };
+
+        saveLocalStorage(projectDataReference);
     };
 
     const switchProject = (projectId) => {
@@ -33,12 +36,14 @@ export default function projectInterface(projectDataReference) {
         // Set new active project.
         projectDataReference.setActiveProject(projectId);
         const newActiveProject = projectDataReference.getActiveProject();
+        saveLocalStorage(projectDataReference);
 
         // Re-insert default DOM content container and elements.
         const contentContainer = createElement({'tag': 'div', 'cls': 'content'});
         document.body.insertBefore(contentContainer, document.querySelector('footer'));
         contentContainer.appendChild(createAddSection());
 
+        // Render project sections and tasks to the DOM.
         renderProject(newActiveProject);
     };
 

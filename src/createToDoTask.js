@@ -61,7 +61,7 @@ export default function createToDoTask(toDoProperties, validator) {
         taskCompleted = (taskCompleted) ? false : true;
     };
     const exportData = () => {
-        return {title, description, dueDate, priority, id, sectionId, section};
+        return {title, description, dueDate, priority, id, sectionId};
     };
     
     return {getTitle, 

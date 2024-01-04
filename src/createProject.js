@@ -49,7 +49,9 @@ export default function createProject(title, projectDataReference, validator) {
     const exportData = () => {
         const projectData = [];
         project.forEach((section) => {
-            projectData.push(section.exportData());
+            if (section) {
+                projectData.push(section.exportData());
+            };
         });
 
         return {title, 'data': projectData};

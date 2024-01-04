@@ -28,7 +28,7 @@ export default function createProjectSection(sectionProperties, validator) {
 
     const deleteTaskFromSection = (taskId) => {
         section[taskId] = null;
-    }
+    };
 
     const getNumberOfTasks = () => section.length;
 
@@ -49,7 +49,9 @@ export default function createProjectSection(sectionProperties, validator) {
         const sectionData = [];
 
         section.forEach((task) => {
-            sectionData.push(task.exportData());
+            if (task) {
+                sectionData.push(task.exportData());
+            };
         });
 
         return {title, id, 'data': sectionData};
