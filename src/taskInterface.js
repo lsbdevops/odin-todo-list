@@ -9,6 +9,7 @@ export default function taskInterface(activeProject) {
     const validator = toDoValidator();
 
     const projectsDataReference = activeProject.getProjectDataReference();
+    console.log('hello')
 
     const createTask = (taskProperties, section) => {
         // Create task in memory and add to the current section.
@@ -84,5 +85,10 @@ export default function taskInterface(activeProject) {
         taskToolbar.prepend(priorityIndicator);
     };
 
-    return {createTask, deleteTask, editTask, addTaskToDOM};
+    const updateCompletionStatus = (task) => {
+        task.changeCompletionStatus();
+        saveLocalStorage(projectsDataReference);
+    };
+
+    return {createTask, deleteTask, editTask, addTaskToDOM, updateCompletionStatus};
 }

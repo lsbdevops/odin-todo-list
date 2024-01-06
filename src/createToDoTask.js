@@ -6,6 +6,9 @@ export default function createToDoTask(toDoProperties, validator) {
     let {title, description, dueDate, priority, id, sectionId, section} = toDoProperties;
     let cardElement = null;
     let taskCompleted = false;
+    if ('taskCompleted' in toDoProperties) {
+        taskCompleted = toDoProperties.taskCompleted;
+    };
 
     // Getter methods.
     const getTitle = () => title;
@@ -61,7 +64,7 @@ export default function createToDoTask(toDoProperties, validator) {
         taskCompleted = (taskCompleted) ? false : true;
     };
     const exportData = () => {
-        return {title, description, dueDate, priority, id, sectionId};
+        return {title, description, dueDate, priority, id, sectionId, taskCompleted};
     };
     
     return {getTitle, 

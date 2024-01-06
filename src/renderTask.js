@@ -114,7 +114,7 @@ export default function taskCard(task, activeProject) {
 
     const addCompleteTaskEvent = (checkbox) => {
         checkbox.addEventListener('click', (e) => {
-            task.changeCompletionStatus();
+            taskInterface(activeProject).updateCompletionStatus(task);
             const taskCard = task.getCardElement();
             if (task.getCompletionStatus()) {
                 taskCard.classList.add('completed');

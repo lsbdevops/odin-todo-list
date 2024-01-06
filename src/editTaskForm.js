@@ -57,7 +57,7 @@ export default function editForm(activeProject) {
             if (fieldsValid(newTaskProperties, validator())) { 
                 // Use interface to create task.
                 taskInterface(activeProject).editTask(activeProject.getActiveTask(), newTaskProperties);
-
+                
                 // Refresh the task viewer dialog.
                 taskViewer(activeProject).refreshTaskView();
 
