@@ -51,6 +51,9 @@ export default function createProject(title, projectDataReference, validator) {
         project.forEach((section) => {
             if (section) {
                 projectData.push(section.exportData());
+            }
+            else {
+                projectData.push(null);
             };
         });
 

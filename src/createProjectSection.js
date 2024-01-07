@@ -51,6 +51,9 @@ export default function createProjectSection(sectionProperties, validator) {
         section.forEach((task) => {
             if (task) {
                 sectionData.push(task.exportData());
+            }
+            else {
+                sectionData.push(null);
             };
         });
 

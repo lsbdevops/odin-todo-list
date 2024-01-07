@@ -46,13 +46,21 @@ function importLocalStorage() {
       if (projectData.data) {
         //Create all sections.
         projectData.data.forEach((sectionData) => {
+          if (!sectionData) {
+            project.addSectionToProject(null);
+            return;
+          };
           const section = createSection(sectionData, validator());
           //Create all tasks and append to section.
           if (sectionData.data) {
             sectionData.data.forEach((taskData) => {
-            taskData.section = section;
-            const task = createToDoTask(taskData, validator());
-            section.addTaskToSection(task);
+              if (!taskData) {
+                section.addTaskToSection(null);
+                return;
+              }
+              taskData.section = section;
+              const task = createToDoTask(taskData, validator());
+              section.addTaskToSection(task);
             });
           };
           //Append section to project.

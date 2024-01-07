@@ -22,7 +22,12 @@ export default function createProjectStorage() {
         const projectsData = {'activeProjectId': activeProject, 'data': []};
         
         projects.forEach((project) => {
-            projectsData.data.push(project.exportData());
+            if (project) {
+                projectsData.data.push(project.exportData());
+            }
+            else {
+                projectsData.data.push(null);
+            }
         });
 
         return projectsData;
