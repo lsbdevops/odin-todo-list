@@ -44,5 +44,20 @@ export default function sectionInterface(activeProject) {
         section.getSectionElement().remove();
     };
 
-    return {createSection, deleteSection, addSectionToDOM};
+    const editSectionTitle = (section, newTitle) => {
+        editSectionInMemory(section, newTitle);
+        editSectionInDOM(section);
+        saveLocalStorage(projectDataReference);
+    };
+
+    const editSectionInMemory = (section, newTitle) => {
+        section.setTitle(newTitle);
+    };
+
+    const editSectionInDOM = (section) => {
+        const sectionElement = section.getSectionElement();
+        sectionElement.querySelector('.section-title>h2').textContent = section.getTitle();
+    };
+
+    return {createSection, deleteSection, addSectionToDOM, editSectionTitle};
 };

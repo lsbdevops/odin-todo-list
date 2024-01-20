@@ -2,13 +2,16 @@
 import {default as createElement} from './createDOMElement.js';
 import {default as taskForm} from './createTaskForm.js';
 import {default as sectionInterface} from './sectionInterface.js';
-import {default as dropDownMenu} from './createDropDownMenu.js'
+import {default as dropDownMenu} from './createDropDownMenu.js';
+import {editSectionForm} from './createSectionForm.js';
 import addTaskIcon from './assets/plus-box.svg';
 import deleteSectionIcon from './assets/delete-section.svg';
+import editSectionTitleIcon from './assets/edit-title.svg'
 
 export default function sectionCard(section, activeProject) {
     const openAddTaskForm = (button) => taskForm(activeProject).openForm(button, section);
     const deleteSectionFunc = () => sectionInterface(activeProject).deleteSection(section);
+    const editTitleFunc = () => editSectionForm(activeProject, section);
     const title = section.getTitle();
 
     const createSectionCard = () => {
@@ -20,6 +23,7 @@ export default function sectionCard(section, activeProject) {
         section.setSectionElement(sectionContainer);
 
         addDeleteSectionEvent(sectionContainer);
+        addEditTitleEvent(sectionContainer);
 
         return sectionContainer;
     };
@@ -50,34 +54,42 @@ export default function sectionCard(section, activeProject) {
         return addTaskButton;
     };
 
-    const createDeleteSectionButton = () => {
-        const deleteSectionButton = createElement({'tag': 'button', 'cls': 'delete-section-button'});
+    const addDeleteSectionEvent = (container) => {
+        const listNode = container.querySelector('.section-button.delete-section').parentElement;
 
-        const deleteSection = new Image();
-        deleteSection.src = deleteSectionIcon;
-        deleteSection.alt = 'Delete Section Button';
-
-        deleteSectionButton.append(deleteSection);
-
-        return deleteSectionButton;
+        listNode.addEventListener('click', deleteSectionFunc);
     };
 
-    const addDeleteSectionEvent = (container) => {
-        const deleteSectionListNode = container.querySelector('.delete-section-button').parentElement;
+    const addEditTitleEvent = (container) => {
+        const listNode = container.querySelector('.section-button.edit-title').parentElement;
 
-        deleteSectionListNode.addEventListener('click', deleteSectionFunc);
+        listNode.addEventListener('click', editTitleFunc);
+    };
+
+    const createButton = (type, icon) => {
+        const button = createElement({'tag': 'button', 'cls': ['section-button', type]});
+
+        const buttonIcon = new Image();
+        buttonIcon.src = icon;
+        buttonIcon.alt = `${type} button`;
+
+        button.append(buttonIcon);
+
+        return button;
     };
 
     const createDropDownMenu = () => {
-        const menuObject = dropDownMenu([
-            'Delete Section'
-        ]);
+        const dropDownItems = {'Delete Section': ['delete-section', deleteSectionIcon], 
+                               'Edit Section Title': ['edit-title', editSectionTitleIcon]};
 
+        const menuObject = dropDownMenu(Object.keys(dropDownItems));
         const menu = menuObject.createMenu();
 
-        // Delete section option.
-        const deleteSectionNode = menuObject.getListItemNode('Delete Section');
-        deleteSectionNode.prepend(createDeleteSectionButton());
+        // Create icons.
+        for (const [desc, domDetails] of Object.entries(dropDownItems)) {
+            const node = menuObject.getListItemNode(desc);
+            node.prepend(createButton(domDetails[0], domDetails[1]))
+        };
 
         return menu;
     };
