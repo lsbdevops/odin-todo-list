@@ -5,10 +5,8 @@ export default function createToDoTask(toDoProperties, validator) {
     // Deconstruct parameters.
     let {title, description, dueDate, priority, id, sectionId, section} = toDoProperties;
     let cardElement = null;
-    let taskCompleted = false;
-    if ('taskCompleted' in toDoProperties) {
-        taskCompleted = toDoProperties.taskCompleted;
-    };
+    let taskCompleted = toDoProperties.taskCompleted || false;
+    const checkList = [];
 
     // Getter methods.
     const getTitle = () => title;
@@ -29,6 +27,7 @@ export default function createToDoTask(toDoProperties, validator) {
     const getSection = () => section;
     const getCardElement = () => cardElement;
     const getCompletionStatus = () => taskCompleted;
+    const getNumberOfCheckListItems = () => checkList.length;
 
     // Setter methods.
     const setDescription = (newDescription) => {
@@ -63,10 +62,19 @@ export default function createToDoTask(toDoProperties, validator) {
     const changeCompletionStatus = () => {
         taskCompleted = (taskCompleted) ? false : true;
     };
+
     const exportData = () => {
         return {title, description, dueDate, priority, id, sectionId, taskCompleted};
     };
-    
+
+    const addItemToCheckList = (checkListItem) => {
+        checkList.push(checkListItem);
+    };
+
+    const removeItemFromCheckList = (checkListItemId) => {
+        checkList[checkListItemId] = null;
+    };
+
     return {getTitle, 
         getDescription, 
         getDueDate,
@@ -76,6 +84,7 @@ export default function createToDoTask(toDoProperties, validator) {
         getSectionId,
         getSection,
         getCardElement,
+        getNumberOfCheckListItems,
         setTitle,
         setDescription,
         setDueDate,
@@ -86,6 +95,8 @@ export default function createToDoTask(toDoProperties, validator) {
         changeCompletionStatus, 
         getCompletionStatus,
         exportData,
+        addItemToCheckList,
+        removeItemFromCheckList,
     };
 };
 

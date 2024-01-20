@@ -278,7 +278,7 @@ dialog[open] > form > input, dialog[open] > form > textarea, dialog[open] > form
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20%;
+    gap: 10%;
     margin-top: 15px;
 }
 
