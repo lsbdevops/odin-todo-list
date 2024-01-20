@@ -89,5 +89,17 @@ export default function taskInterface(activeProject) {
         saveLocalStorage(projectsDataReference);
     };
 
-    return {createTask, deleteTask, editTask, addTaskToDOM, updateCompletionStatus};
+    const sortTasks = (section, sortBy) => {
+        section.sortTasksBy(sortBy);
+
+        section.getSectionElement().querySelector('.section-tasks').textContent = '';
+        section.getAllTasks().forEach((task) => {
+            const newTaskCard = addTaskToDOM(task, section);
+            task.setCardElement(newTaskCard); 
+    });
+    
+    saveLocalStorage(projectsDataReference);
+};
+
+    return {createTask, deleteTask, editTask, addTaskToDOM, updateCompletionStatus, sortTasks};
 }

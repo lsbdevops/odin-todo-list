@@ -2,16 +2,22 @@
 import {default as createElement} from './createDOMElement.js';
 import {default as taskForm} from './createTaskForm.js';
 import {default as sectionInterface} from './sectionInterface.js';
+import {default as taskInterface} from './taskInterface.js';
 import {default as dropDownMenu} from './createDropDownMenu.js';
 import {editSectionForm} from './createSectionForm.js';
 import addTaskIcon from './assets/plus-box.svg';
 import deleteSectionIcon from './assets/delete-section.svg';
-import editSectionTitleIcon from './assets/edit-title.svg'
+import editSectionTitleIcon from './assets/edit-title.svg';
+import sortByTitleIcon from './assets/sort-by-title.svg';
+import sortByCompletedIcon from './assets/sort-by-completed.svg';
+import sortByDueDateIcon from './assets/sort-by-due-date.svg';
+import sortByPriorityIcon from './assets/sort-by-priority.svg';
 
 export default function sectionCard(section, activeProject) {
     const openAddTaskForm = (button) => taskForm(activeProject).openForm(button, section);
     const deleteSectionFunc = () => sectionInterface(activeProject).deleteSection(section);
     const editTitleFunc = () => editSectionForm(activeProject, section);
+    const sortByFunc = (sortBy) => taskInterface(activeProject).sortTasks(section, sortBy);
     const title = section.getTitle();
 
     const createSectionCard = () => {
@@ -24,6 +30,7 @@ export default function sectionCard(section, activeProject) {
 
         addDeleteSectionEvent(sectionContainer);
         addEditTitleEvent(sectionContainer);
+        addSortEvents(sectionContainer);
 
         return sectionContainer;
     };
@@ -66,6 +73,12 @@ export default function sectionCard(section, activeProject) {
         listNode.addEventListener('click', editTitleFunc);
     };
 
+    const addSortEvents = (container) => {
+        const sortTitleNode = container.querySelector('.section-button.sort-title').parentElement;
+
+        sortTitleNode.addEventListener('click', () => sortByFunc('title'));
+    };
+
     const createButton = (type, icon) => {
         const button = createElement({'tag': 'button', 'cls': ['section-button', type]});
 
@@ -80,7 +93,11 @@ export default function sectionCard(section, activeProject) {
 
     const createDropDownMenu = () => {
         const dropDownItems = {'Delete Section': ['delete-section', deleteSectionIcon], 
-                               'Edit Section Title': ['edit-title', editSectionTitleIcon]};
+                               'Edit Section Title': ['edit-title', editSectionTitleIcon],
+                               'Sort By Title': ['sort-title', sortByTitleIcon],
+                               'Sort By Due Date': ['sort-due-date', sortByDueDateIcon],
+                               'Sort By Priority': ['sort-priority', sortByPriorityIcon],
+                               'Sort By Completed': ['sort-complete', sortByCompletedIcon]};
 
         const menuObject = dropDownMenu(Object.keys(dropDownItems));
         const menu = menuObject.createMenu();

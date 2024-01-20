@@ -1,7 +1,7 @@
 'use strict';
 
 export default function createProjectSection(sectionProperties, validator) {
-    const section = [];
+    let section = [];
     let {title, id} = sectionProperties;
     let sectionElement = null;
 
@@ -36,6 +36,7 @@ export default function createProjectSection(sectionProperties, validator) {
         const tasks = []
         section.forEach((task) => {
             if (task) {
+                task.setId(tasks.length);
                 tasks.push(task);
             };
         });
@@ -60,6 +61,22 @@ export default function createProjectSection(sectionProperties, validator) {
         return {title, id, 'data': sectionData};
     };
 
+    const cleanSectionData = () => {
+        section = getAllTasks();
+    };
+
+    const sortTasksBy = (sortBy) => {
+        cleanSectionData();
+
+        switch(sortBy) {
+            case 'title':
+                section.sort((a, b) => {
+                    return a.getTitle().localeCompare(b.getTitle());
+                });
+                break;
+        };
+    };
+
     return {getTitle, 
         setTitle,   
         getId,
@@ -73,5 +90,6 @@ export default function createProjectSection(sectionProperties, validator) {
         getAllTasks,
         getTask,
         exportData,
+        sortTasksBy,
     };
 };
