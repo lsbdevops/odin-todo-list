@@ -79,6 +79,9 @@ export default function sectionCard(section, activeProject) {
 
         const sortPriorityNode = container.querySelector('.section-button.sort-priority').parentElement;
         sortPriorityNode.addEventListener('click', () => sortByFunc('priority'));
+
+        const sortDueDateNode = container.querySelector('.section-button.sort-due-date').parentElement;
+        sortDueDateNode.addEventListener('click', () => sortByFunc('dueDate'));
     };
 
     const createButton = (type, icon) => {

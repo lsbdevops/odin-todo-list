@@ -85,7 +85,14 @@ export default function createProjectSection(sectionProperties, validator) {
                 };
                 break;
             case 'dueDate':
+                sortFunction = (a, b) => {
+                    const aDate = a.getDueDate();
+                    const bDate = b.getDueDate();
 
+                    if (aDate > bDate) return 1;
+                    if (aDate < bDate) return -1;
+                    return 0;
+                }
                 break;
             case 'completionStatus':
 
