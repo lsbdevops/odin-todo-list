@@ -95,7 +95,14 @@ export default function createProjectSection(sectionProperties, validator) {
                 }
                 break;
             case 'completionStatus':
+                sortFunction = (a, b) => {
+                    const aComplete = a.getCompletionStatus();
+                    const bComplete = b.getCompletionStatus();
 
+                    if (aComplete && bComplete) return 0;
+                    if (aComplete && !bComplete) return 1;
+                    return -1;
+                }
                 break;
         };
 

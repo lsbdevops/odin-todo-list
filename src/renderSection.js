@@ -82,6 +82,9 @@ export default function sectionCard(section, activeProject) {
 
         const sortDueDateNode = container.querySelector('.section-button.sort-due-date').parentElement;
         sortDueDateNode.addEventListener('click', () => sortByFunc('dueDate'));
+
+        const sortCompletionNode = container.querySelector('.section-button.sort-complete').parentElement;
+        sortCompletionNode.addEventListener('click', () => sortByFunc('completionStatus'));
     };
 
     const createButton = (type, icon) => {
