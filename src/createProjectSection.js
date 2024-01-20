@@ -67,14 +67,32 @@ export default function createProjectSection(sectionProperties, validator) {
 
     const sortTasksBy = (sortBy) => {
         cleanSectionData();
+        let sortFunction;
 
         switch(sortBy) {
             case 'title':
-                section.sort((a, b) => {
-                    return a.getTitle().localeCompare(b.getTitle());
-                });
+                sortFunction = (a, b) => a.getTitle().localeCompare(b.getTitle());
+                break;
+            case 'priority':
+                sortFunction = (a, b) => {
+                    const aPriority = a.getPriority();
+                    const bPriority = b.getPriority();
+
+                    if (aPriority == bPriority) return 0;
+                    if (aPriority === 'high') return -1;
+                    if ((aPriority === 'medium') && (bPriority !== 'high')) return -1;
+                    return 1;
+                };
+                break;
+            case 'dueDate':
+
+                break;
+            case 'completionStatus':
+
                 break;
         };
+
+        section.sort(sortFunction);
     };
 
     return {getTitle, 

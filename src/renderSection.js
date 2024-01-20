@@ -75,8 +75,10 @@ export default function sectionCard(section, activeProject) {
 
     const addSortEvents = (container) => {
         const sortTitleNode = container.querySelector('.section-button.sort-title').parentElement;
-
         sortTitleNode.addEventListener('click', () => sortByFunc('title'));
+
+        const sortPriorityNode = container.querySelector('.section-button.sort-priority').parentElement;
+        sortPriorityNode.addEventListener('click', () => sortByFunc('priority'));
     };
 
     const createButton = (type, icon) => {
