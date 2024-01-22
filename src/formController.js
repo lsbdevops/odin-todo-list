@@ -15,6 +15,7 @@ export default function formController(activeProject) {
         taskForm.addEvents();
         taskForm.resetForm();
         taskViewer.closeTask();
+        taskViewer.openCheckList();
         editForm.addEvents();
     };
 

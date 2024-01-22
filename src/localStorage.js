@@ -3,6 +3,7 @@ import {default as createProjectStorage} from './createProjectStorage.js';
 import {default as createProject} from './createProject.js';
 import {default as createSection} from './createProjectSection.js';
 import {default as createToDoTask} from './createToDoTask.js';
+import {default as createChecklistItem} from './taskChecklistItem.js';
 import {default as validator} from './toDoValidator.js';
 
 // Check storage is available, code from: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
@@ -51,7 +52,7 @@ function importLocalStorage() {
             return;
           };
           const section = createSection(sectionData, validator());
-          //Create all tasks and append to section.
+          //Create all tasks.
           if (sectionData.data) {
             sectionData.data.forEach((taskData) => {
               if (!taskData) {
@@ -60,6 +61,13 @@ function importLocalStorage() {
               }
               taskData.section = section;
               const task = createToDoTask(taskData, validator());
+              //If the task has an associated checklist, create the checklist and add to task.
+              if (taskData.checklistData) {
+                taskData.checklistData.forEach((checklistItem) => {
+                  task.addItemToCheckList(createChecklistItem(checklistItem));
+                });
+              };
+              //Append task to section.
               section.addTaskToSection(task);
             });
           };

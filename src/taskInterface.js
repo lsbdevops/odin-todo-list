@@ -2,6 +2,7 @@
 import {default as createToDoTask} from './createToDoTask.js';
 import {default as taskCard} from './renderTask.js';
 import {default as toDoValidator} from './toDoValidator.js';
+import {default as createTaskCheckListItem} from './taskChecklistItem.js'
 import {saveLocalStorage} from './localStorage.js';
 
 export default function taskInterface(activeProject) {
@@ -98,8 +99,14 @@ export default function taskInterface(activeProject) {
             task.setCardElement(newTaskCard); 
     });
     
-    saveLocalStorage(projectsDataReference);
-};
+        saveLocalStorage(projectsDataReference);
+    };
 
-    return {createTask, deleteTask, editTask, addTaskToDOM, updateCompletionStatus, sortTasks};
+    const createCheckListItem = (itemProperties, task) => {
+        const listItem = createTaskCheckListItem(itemProperties);
+        task.addItemToCheckList(listItem);
+        saveLocalStorage(projectsDataReference);
+    };
+
+    return {createTask, deleteTask, editTask, addTaskToDOM, updateCompletionStatus, sortTasks, createCheckListItem};
 }

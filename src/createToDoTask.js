@@ -6,7 +6,7 @@ export default function createToDoTask(toDoProperties, validator) {
     let {title, description, dueDate, priority, id, sectionId, section} = toDoProperties;
     let cardElement = null;
     let taskCompleted = toDoProperties.taskCompleted || false;
-    const checkList = [];
+    const checklist = [];
 
     // Getter methods.
     const getTitle = () => title;
@@ -27,7 +27,7 @@ export default function createToDoTask(toDoProperties, validator) {
     const getSection = () => section;
     const getCardElement = () => cardElement;
     const getCompletionStatus = () => taskCompleted;
-    const getNumberOfCheckListItems = () => checkList.length;
+    const getNumberOfCheckListItems = () => checklist.length;
 
     // Setter methods.
     const setDescription = (newDescription) => {
@@ -63,17 +63,29 @@ export default function createToDoTask(toDoProperties, validator) {
         taskCompleted = (taskCompleted) ? false : true;
     };
 
+    // Export for JSON.
     const exportData = () => {
-        return {title, description, dueDate, priority, id, sectionId, taskCompleted};
+        const checklistData = [];
+        if (checklist.length > 0) {
+            checklist.forEach((item) => {
+                const checklistItemObj = {};
+                checklistItemObj.description = item.getDescription();
+                checklistItemObj.completionStatus = item.getCompletionStatus();
+                checklistData.push(checklistItemObj);
+            });
+        };
+
+        return {title, description, dueDate, priority, id, sectionId, taskCompleted, checklistData};
     };
 
-    const addItemToCheckList = (checkListItem) => {
-        checkList.push(checkListItem);
+    // Checklist methods.
+    const addItemToCheckList = (checklistItem) => {
+        checklist.push(checklistItem);
     };
-
-    const removeItemFromCheckList = (checkListItemId) => {
-        checkList[checkListItemId] = null;
+    const removeItemFromCheckList = (checklistItemId) => {
+        checklist[checklistItemId] = null;
     };
+    const getCheckListItems = () => checklist;
 
     return {getTitle, 
         getDescription, 
@@ -97,6 +109,7 @@ export default function createToDoTask(toDoProperties, validator) {
         exportData,
         addItemToCheckList,
         removeItemFromCheckList,
+        getCheckListItems,
     };
 };
 
